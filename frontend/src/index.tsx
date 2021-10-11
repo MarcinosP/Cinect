@@ -1,17 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import "./globals";
+import "./methods";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+import axios from "axios";
+
+// translation
+import { I18nextProvider } from "react-i18next";
+
+axios.defaults.baseURL = `127.0.0.1`;
+axios.defaults.withCredentials = true;
+
+ReactDOM.render(<App />, document.getElementById("app"));

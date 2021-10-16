@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400;1,900&display=swap');
+
+* {
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #1F1E2E;
+    color: #707070;
+    height: 100vh;
+    font-family: 'Lato', sans-serif;
+}
+
+*::-webkit-scrollbar {
+    width: 0.5em;
+    margin: 0;
+}
+
+*::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 1em;
+}
+
+@media only screen and (max-device-width: 700px) {
+    *{
+        font-size: 1em;
+    }
+}

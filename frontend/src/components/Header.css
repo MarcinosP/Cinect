@@ -1,0 +1,59 @@
+.header {
+    min-height: 5vh;
+    display: flex;
+    width: 100vw;
+}
+
+.logo {
+    height: 5vh;
+    margin-left: 3.4vw;
+}
+
+.logo > svg {
+    color: white;
+    max-height: 3em;
+    margin-right: 0;
+}
+
+.logo-div{
+    width: 20vw;
+}
+
+.search-bar {
+    margin: auto 5vw auto 35vw;
+    width: 32vw;
+}
+
+.search-bar > input {
+    background: #47485d 0% 0% no-repeat padding-box;
+    border: none;
+    border-radius: 1.5em;
+    height: 3vh;
+    width: 100%;
+    text-align: center;
+    color: white;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.search-bar > input:focus {
+    outline: none;
+}
+
+.profile-link {
+    margin: auto 1vw auto 1vw;
+    width: 2.5em;
+    border-radius: 50%;
+    background-color: white;
+    height: 2.5em;
+}
+.header-link{
+    margin: auto;
+    text-decoration: none;
+}
+
+@media only screen and (max-device-width: 700px) {
+    .header-link {
+        display: none;
+    }
+}

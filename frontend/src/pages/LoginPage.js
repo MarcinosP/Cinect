@@ -46,7 +46,7 @@ const LoginPage = () => {
                         const cookies = new Cookies();
                         cookies.set('user', response.data.id, {path: '/'});
                         // cookies.remove('user');
-                        location.href = '/';
+                        window.location.href = '/';
                     }
                 } else {
                     setState(prev => {
@@ -113,7 +113,7 @@ const LoginPage = () => {
                 });
             }
         }).then(() => {
-            location.href = '/login_page';
+            window.location.href = '/login_page';
         });
 
     }

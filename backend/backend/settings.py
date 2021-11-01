@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'account.User'
+
 
 # Application definition
 
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -74,10 +77,23 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': 'dbctrhjj905d4d',
+
+        'USER': 'jircohvrscffbv',
+
+        'PASSWORD': '42e3a4751265de0c400fac680a599231b44142e393526eebc558e8e7cea06cb9',
+
+        'HOST': 'ec2-34-250-19-18.eu-west-1.compute.amazonaws.com',
+
+        'PORT': '5432',
+
     }
+
 }
 
 

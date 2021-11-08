@@ -36,16 +36,12 @@ const LoginPage = () => {
 
 
     const onLoginSubmit = (data) => {
-        console.log('login');
-        console.log(data);
-
         Api.login(data.email, data.password).then(response => {
             if (response.status === 200) {
                 if (response.data.message === 'success!') {
                     if (response.status === 200) {
                         const cookies = new Cookies();
                         cookies.set('user', response.data.id, {path: '/'});
-                        // cookies.remove('user');
                         window.location.href = '/';
                     }
                 } else {

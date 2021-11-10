@@ -20,19 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-x&($93e%#kb=xv2h#k2t=&!f(4(^&dcky_eu@n4)e+gyt5^ayu'
+SECRET_KEY = 'django-insecure-dh!wq$=3*#w(qa1=f=ew(p-p18b(&@n4c74n#wv28&_)4ft-i^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-SITE_ID = 1
-
-REST_USE_JWT = True
-
-ACCOUNT_FORMS = {'signup': 'accounts.forms.SimpleSignupForm'}
-AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Application definition
 
@@ -43,12 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_auth',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
-    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -86,23 +74,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-
     'default': {
-
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-        'NAME': 'df10eqestgmjbc',
-
-        'USER': 'cfwedyfjjsqguy',
-
-        'PASSWORD': '185eb7b80e4ef7517a00051f96feb399b40e8a3a34f69075a224df2e90bef82e',
-
-        'HOST': 'ec2-54-155-87-214.eu-west-1.compute.amazonaws.com',
-
-        'PORT': '5432',
-
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-
 }
 
 

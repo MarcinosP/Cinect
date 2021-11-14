@@ -4,8 +4,8 @@
   "description": "Engineer's Thesis",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development ./cinect/frontend/src/index.js -o ./cinect/frontend/static/frontend/main.js",
-    "build": "webpack --mode production ./cinect/frontend/src/index.js -o ./cinect/frontend/static/frontend/main.js"
+    "dev": "webpack --mode development --watch ./cinect/frontend/src/index.js --output-path ./cinect/frontend/static/frontend",
+    "build": "webpack --mode production ./cinect/frontend/src/index.js --output-path ./cinect/frontend/static/frontend"
   },
   "repository": {
     "type": "git",

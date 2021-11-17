@@ -16,13 +16,13 @@ import PrivateRoute from "./common/PrivateRoute";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
-import AddMovies from "./pages/AddMovies";
-import AddSeries from "./pages/AddSeries";
-import AllUsers from "./pages/AllUsers";
-import FriendList from "./pages/FriendList";
+import AddMovies from "../pages/AddMovies";
+import AddSeries from "../pages/AddSeries";
+import AllUsers from "../pages/AllUsers";
+import FriendList from "../pages/FriendList";
 import ShowFriend from "./layout/ShowFriend/ShowFriend";
-import Settings from "./pages/Settings";
-import Profile from "./pages/Profile";
+import Settings from "../pages/Settings";
+import Profile from "../pages/Profile";
 
 // Alert Options
 const alertOptions = {
@@ -42,20 +42,19 @@ class App extends Component {
                     <Router>
                         <Fragment>
                             <Alerts />
-                            <div className="container">
+                            {/* <div className="container"> */}
                                 <Switch>
                                     <Route exact path="/register" component={Register} />
                                     <Route exact path="/login" component={Login} />
                                     <PrivateRoute exact path="/" component={Profile} />
-                                    {/* <PrivateRoute exact path="/movies" component={AddMovies} />
+                                    <PrivateRoute exact path="/movies" component={AddMovies} />
                                     <PrivateRoute exact path="/series" component={AddSeries} />
                                     <PrivateRoute exact path="/all_users" component={AllUsers} />
                                     <PrivateRoute exact path="/friend_list" component={FriendList} />
                                     <PrivateRoute exact path="/show_friend" component={ShowFriend} />
                                     <PrivateRoute exact path="/settings" component={Settings} />
-                                    <PrivateRoute exact path="/settings" component={Settings} /> */}
                                 </Switch>
-                            </div>
+                            {/* </div> */}
                         </Fragment>
                     </Router>
                 </AlertProvider>

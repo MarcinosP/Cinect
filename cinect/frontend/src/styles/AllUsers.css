@@ -5,10 +5,10 @@
 }
 
 .all-users {
-    margin: 1vh auto 1vh auto;
-    min-height: 92vh;
-    width: 83vw;
-    background-color: #28293D;
+    margin: 0vh auto 1vh auto;
+    min-height: 100%;
+    width: 80%;
+    background-color: #28293d;
     border-radius: 1em;
     display: flex;
     flex-direction: column;
@@ -30,7 +30,6 @@
     margin-left: 2vw;
     width: 20%;
 }
-
 
 .all-users-search-bar {
     width: 80%;

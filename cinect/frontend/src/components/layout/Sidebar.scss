@@ -1,0 +1,16 @@
+// Your variable overrides
+$sidebar-bg-color: rgb(54, 55, 76);
+
+@import "~react-pro-sidebar/dist/scss/styles.scss";
+
+.closemenu {
+    color: #DDDDDD;
+    // position: absolute;
+    z-index: 9999;
+    // line-height: 20px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 22px;
+    cursor: pointer;
+    margin: 5px auto auto 25px;
+  }

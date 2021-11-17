@@ -26,8 +26,10 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "css-loader": "^6.5.1",
     "file-loader": "^6.2.0",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",
-    "webpack": "^5.64.0",
+    "webpack": "^5.64.1",
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
@@ -40,6 +42,7 @@
     "react-alert-template-basic": "^1.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-pro-sidebar": "^0.7.1",
     "react-redux": "^7.2.6",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",

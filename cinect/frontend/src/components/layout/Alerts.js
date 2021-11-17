@@ -37,4 +37,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(withAlert()(Alerts));
-// export default connect(mapStateToProps)(withAlert(Alerts));

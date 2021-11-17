@@ -1,5 +1,8 @@
 node_modules
 
+img/movies
+img/series
+
 ### Django ###
 *.log
 *.pot

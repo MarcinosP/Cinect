@@ -1,12 +1,12 @@
 import "../../../styles/Profile.css"
 import Header from "../Header";
-import Navbar from "../Navbar";
 import React, {useEffect, useState} from 'react';
 import Watched from "../Profile/Watched";
 // import {Api} from "../../apiHandler/apiHandler";
 import FriendInfo from "./FriendInfo";
 import FriendPreferences from "./FriendPreferences";
 import {useParams} from "react-router";
+import Sidebar from "../Sidebar";
 
 const ShowFriend = (props) => {
     let {id} = useParams();
@@ -77,7 +77,7 @@ const ShowFriend = (props) => {
         <>
             <Header/>
             <div className='content'>
-                <Navbar/>
+                <Sidebar/>
                 <div className='profile'>
                     <div className='info' onClick={() => {
                         console.log(friend.name + " " + friend.surname)

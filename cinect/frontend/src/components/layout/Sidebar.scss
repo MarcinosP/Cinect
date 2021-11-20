@@ -1,7 +1,13 @@
+.navbar {
+  width: 12vw;
+  margin: 0 0 1vh 1vw;
+  border-radius: 1em;
+  background: rgb(54, 55, 76);
+}
+
 // Your variable overrides
 $sidebar-bg-color: rgb(54, 55, 76);
-
-@import "~react-pro-sidebar/dist/scss/styles.scss";
+$sidebar-width: 12vw !default;
 
 .closemenu {
     color: #DDDDDD;
@@ -14,3 +20,5 @@ $sidebar-bg-color: rgb(54, 55, 76);
     cursor: pointer;
     margin: 5px auto auto 25px;
   }
+
+@import "~react-pro-sidebar/dist/scss/styles.scss";

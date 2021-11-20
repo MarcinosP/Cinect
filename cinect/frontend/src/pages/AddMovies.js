@@ -1,5 +1,4 @@
 import Header from "../components/layout/Header";
-import Navbar from "../components/layout/Navbar";
 import "../styles/AddMovies.css";
 import Movie from "../components/layout/Movie";
 import { withRouter } from "react-router";

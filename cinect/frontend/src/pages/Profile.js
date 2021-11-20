@@ -1,6 +1,5 @@
 import "../styles/Profile.css";
 import Header from "../components/layout/Header";
-import Navbar from "../components/layout/Navbar";
 import React, { useEffect, useState } from "react";
 import Watched from "../components/layout/Profile/Watched";
 // import {Api} from "../apiHandler/apiHandler";

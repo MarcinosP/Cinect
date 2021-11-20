@@ -12,62 +12,43 @@ import { Link } from "react-router-dom";
 import "./Sidebar.scss";
 
 export default function Sidebar() {
-    const [menuCollapse, setMenuCollapse] = useState(false);
 
     return (
-        <ProSidebar breakPoint="sm" collapsed={menuCollapse}>
-            <SidebarContent>
-                <div
-                    className="closemenu"
-                    onClick={() => {
-                        setMenuCollapse(!menuCollapse);
-                    }}
-                >
-                    <GiHamburgerMenu />
-                </div>
-                <Menu iconShape="circle">
-                    <MenuItem icon={<CgProfile />}>
-                        Profile
-                        <Link to="/" />
-                    </MenuItem>
-                    <MenuItem icon={<HiOutlineUserAdd />}>
-                        Add friends
-                        <Link to="/all_users" />
-                    </MenuItem>
-                    <MenuItem icon={<FiUsers />}>
-                        Friend list
-                        <Link to="/friend_list" />
-                    </MenuItem>
-                    <MenuItem icon={<RiMovieLine />}>
-                        Movies
-                        <Link to="/movies" />
-                    </MenuItem>
-                    <MenuItem icon={<BiCameraMovie />}>
-                        Series
-                        <Link to="/series" />
-                    </MenuItem>
-                </Menu>
-            </SidebarContent>
-            <SidebarFooter>
-                <Menu>
-                    <MenuItem icon={<FiSettings />}>
-                        Settings
-                        <Link to="/settings " />
-                    </MenuItem>
-                </Menu>
-            </SidebarFooter>
-
-            {/* 
-                <Link to={"/all_users"} className='navbar-item'><HiOutlineUserAdd/></Link>
-                <Link to={"/friend_list"} className='navbar-item'><FiUsers/></Link>
-                <Link to={"/movies"} className='navbar-item'><RiMovieLine/></Link>
-                <Link to={"/series"} className='navbar-item'><BiCameraMovie/></Link>
-                <Link to={"/"} className='navbar-item'><BiLogOutCircle onClick={() => { */}
-
-            {/* <SubMenu title="Components" icon={<FaHeart />}>
-                    <MenuItem>Component 1</MenuItem>
-                    <MenuItem>Component 2</MenuItem>
-                </SubMenu> */}
-        </ProSidebar>
+        <div className="navbar">
+            <ProSidebar>
+                <SidebarContent>
+                    <Menu iconShape="circle">
+                        <MenuItem icon={<CgProfile />}>
+                            Profile
+                            <Link to="/" />
+                        </MenuItem>
+                        <MenuItem icon={<HiOutlineUserAdd />}>
+                            Add friends
+                            <Link to="/all_users" />
+                        </MenuItem>
+                        <MenuItem icon={<FiUsers />}>
+                            Friend list
+                            <Link to="/friend_list" />
+                        </MenuItem>
+                        <MenuItem icon={<RiMovieLine />}>
+                            Movies
+                            <Link to="/movies" />
+                        </MenuItem>
+                        <MenuItem icon={<BiCameraMovie />}>
+                            Series
+                            <Link to="/series" />
+                        </MenuItem>
+                    </Menu>
+                </SidebarContent>
+                <SidebarFooter>
+                    <Menu>
+                        <MenuItem icon={<FiSettings />}>
+                            Settings
+                            <Link to="/settings " />
+                        </MenuItem>
+                    </Menu>
+                </SidebarFooter>
+            </ProSidebar>
+        </div>
     );
 }

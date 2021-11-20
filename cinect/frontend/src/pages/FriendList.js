@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/layout/Header";
-import Navbar from "../components/layout/Navbar";
 import "../styles/AllUsers.css";
 // import {Api} from "../apiHandler/apiHandler";
 import Friend from "../components/layout/ShowFriend/Friend";

@@ -8,7 +8,6 @@ import logo from "../../img/logo.png";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import { deepPurple } from "@material-ui/core/colors";
-import NavbarMobile from "./NavbarMobile";
 
 export class Header extends Component {
     static propTypes = {
@@ -47,7 +46,6 @@ export class Header extends Component {
                 {/* <div className="search-bar">
                     <input placeholder="search people" />
                 </div> */}
-                <NavbarMobile />
                 {/*<div className='profile-link'>*/}
                 {/*</div>*/}
                 {/* <Avatar className={classes.purple}></Avatar>  */}

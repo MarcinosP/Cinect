@@ -1,6 +1,5 @@
 import "../styles/AddSeries.css"
 import Header from "../components/layout/Header";
-import Navbar from "../components/layout/Navbar";
 import Serie from "../components/layout/Serie";
 import React, { useEffect, useState} from 'react';
 import Sidebar from "../components/layout/Sidebar";
@@ -31,7 +30,6 @@ const AddSeries = () => {
         <div>
             <Header/>
             <div className='content'>
-                {/* <Navbar/> */}
                 <Sidebar/>
                 <div className="series-container">
                     <div className="series-search">

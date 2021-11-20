@@ -7,11 +7,12 @@ import ProfileInfo from "../components/layout/Profile/ProfileInfo";
 import ProfilePreferences from "../components/layout/Profile/ProfilePreferences";
 import Sidebar from "../components/layout/Sidebar";
 // import Cookies from "universal-cookie";
+import { connect } from "react-redux";
+import axios from "axios";
 
-const Profile = () => {
-    const [state, setState] = useState({
+const Profile = (props) => {
+    const [userData, setUserData] = useState({
         name: "",
-        id: 0,
         surname: "",
         nationality: "",
         languages: "",
@@ -20,53 +21,18 @@ const Profile = () => {
         timeSeries: "",
     });
 
-    const [watchedList, setWatchedList] = useState({ watched: [] });
-
     useEffect(() => {
-        // const cookies = new Cookies();
-        //add user Details
-        // Api.showUserInfo(cookies.get('user')).then(response => {
-        //     return response.data;
-        // }).then(data => {
-        //     console.log(data['name']);
-        //     setState(prevState => ({
-        //         name: data['name'],
-        //         id: 0,
-        //         surname: data['surname'],
-        //         nationality: data['nationality'],
-        //         languages: data['languages'],
-        //         dateOfBirth: data['dateOfBirth'].date.split(' ')[0],
-        //         timeMovies: data['wtm'],
-        //         timeSeries: data['wts']
-        //     }))
-        // })
-        //     .catch(error => {
-        //         console.error(error);
-        //     })
-        // // add watched movies
-        // Api.getWatchedMoviesByUser(cookies.get('user')).then(response => {
-        //     console.log(response.data);
-        //     for (const responseElement of response.data) {
-        //         console.log(responseElement);
-        //         setWatchedList(prevState => (
-        //             {
-        //                 watched: [...prevState.watched, responseElement]
-        //             }
-        //         ))
-        //     }
-        // })
-        // // add watched series
-        // Api.getWatchedSeriesByUser(cookies.get('user')).then(response => {
-        //     console.log(response.data);
-        //     for (const responseElement of response.data) {
-        //         console.log(responseElement);
-        //         setWatchedList(prevState => (
-        //             {
-        //                 watched: [...prevState.watched, responseElement]
-        //             }
-        //         ))
-        //     }
-        // })
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Token "+props.token
+            },
+        };
+        // console.log(tokenConfig);
+        axios.get(`api/auth/user-details/${props.user.id}`, config).then(response=>{
+            console.log(response)
+            setUserData(response.data[0])
+        })
     }, []);
 
     return (
@@ -77,18 +43,18 @@ const Profile = () => {
                 <div className="profile">
                     <div className="info">
                         <ProfileInfo
-                            name={state.name + " " + state.surname}
-                            dateOfBirth={state.dateOfBirth}
-                            nationality={state.nationality}
-                            languages={state.languages}
+                            name={userData.name + " " + userData.surname}
+                            dateOfBirth={userData.date_of_birth}
+                            nationality={userData.nationality}
+                            languages={userData.languages}
                         />
-                        <ProfilePreferences timeMovies={state.timeMovies} timeSeries={state.timeSeries} />
+                        <ProfilePreferences timeMovies={userData.timeMovies} timeSeries={userData.timeSeries} />
                     </div>
 
-                    <div onClick={() => console.log(watchedList)} className="watched">
+                    <div onClick={() => console.log(userData)} className="watched">
                         <div className="text-lower1">viewing history</div>
                         <div className="watched-list">
-                            {watchedList.watched.map((watched, key) => {
+                            {/* {watchedList.watched.map((watched, key) => {
                                 return (
                                     <Watched
                                         key={key}
@@ -97,7 +63,7 @@ const Profile = () => {
                                         rating={watched.userRating}
                                     />
                                 );
-                            })}
+                            })} */}
                         </div>
                     </div>
                 </div>
@@ -106,4 +72,9 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    token: state.auth.token
+});
+
+export default connect(mapStateToProps, null)(Profile);

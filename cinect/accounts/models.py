@@ -14,3 +14,14 @@ class UserDetails(models.Model):
     watched_time_movies = models.IntegerField(default=0)
     watched_time_series = models.IntegerField(default=0)
     date_of_birth = models.DateTimeField(null=True)
+
+
+class FriendList(models.Model):
+    user_requesting = models.ForeignKey(
+        User, related_name="requesting", on_delete=models.CASCADE, null=True)
+    user_requested = models.ForeignKey(
+        User, related_name="requested", on_delete=models.CASCADE, null=True)
+    confirmed = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ['user_requesting', 'user_requested', ]

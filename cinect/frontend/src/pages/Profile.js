@@ -2,11 +2,9 @@ import "../styles/Profile.css";
 import Header from "../components/layout/Header";
 import React, { useEffect, useState } from "react";
 import Watched from "../components/layout/Profile/Watched";
-// import {Api} from "../apiHandler/apiHandler";
 import ProfileInfo from "../components/layout/Profile/ProfileInfo";
 import ProfilePreferences from "../components/layout/Profile/ProfilePreferences";
 import Sidebar from "../components/layout/Sidebar";
-// import Cookies from "universal-cookie";
 import { connect } from "react-redux";
 import axios from "axios";
 
@@ -16,23 +14,21 @@ const Profile = (props) => {
         surname: "",
         nationality: "",
         languages: "",
-        dateOfBirth: "",
-        timeMovies: "",
-        timeSeries: "",
+        date_of_birth: "",
+        watched_time_movies: "",
+        watched_time_series: "",
     });
 
     useEffect(() => {
         const config = {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Token "+props.token
+                Authorization: "Token " + props.token,
             },
         };
-        // console.log(tokenConfig);
-        axios.get(`api/auth/user-details/${props.user.id}`, config).then(response=>{
-            console.log(response)
-            setUserData(response.data[0])
-        })
+        axios.get(`api/auth/user-details/${props.user.id}`, config).then((response) => {
+            setUserData(response.data[0]);
+        });
     }, []);
 
     return (
@@ -48,7 +44,7 @@ const Profile = (props) => {
                             nationality={userData.nationality}
                             languages={userData.languages}
                         />
-                        <ProfilePreferences timeMovies={userData.timeMovies} timeSeries={userData.timeSeries} />
+                        <ProfilePreferences timeMovies={userData.watched_time_movies} timeSeries={userData.watched_time_series} />
                     </div>
 
                     <div onClick={() => console.log(userData)} className="watched">
@@ -74,7 +70,7 @@ const Profile = (props) => {
 
 const mapStateToProps = (state) => ({
     user: state.auth.user,
-    token: state.auth.token
+    token: state.auth.token,
 });
 
 export default connect(mapStateToProps, null)(Profile);

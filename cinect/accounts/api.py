@@ -2,10 +2,12 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, UserDetailsSerializer
+from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework import status, mixins, generics, exceptions
 from .models import UserDetails
-
+from itertools import chain
+from django.db.models import F
 # Register API
 
 
@@ -58,6 +60,20 @@ class UserAPI(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
+
+class AllUsersGenericApi(generics.RetrieveAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def get(self, request, *args, **kwargs):
+        user_queryset = User.objects.values(
+            'id', 'details__name', 'details__surname').annotate(name=F('details__name'), surname=F('details__surname'))
+        return Response({
+            user_queryset
+        })
+
+
 class UserDetailsGenericApi(
         generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     permission_classes = [
@@ -70,5 +86,5 @@ class UserDetailsGenericApi(
     def get(self, request, user_pk=None):
         if user_pk:
             self.queryset = self.queryset.filter(
-                user_id = user_pk)
+                user_id=user_pk)
         return self.list(request)

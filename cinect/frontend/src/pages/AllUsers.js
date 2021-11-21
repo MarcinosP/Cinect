@@ -7,8 +7,10 @@ import { FaExchangeAlt } from "react-icons/fa";
 import Approve from "../components/layout/AllUsers/Approve";
 import Sidebar from "../components/layout/Sidebar";
 // import Cookies from "universal-cookie";
+import { connect } from "react-redux";
+import axios from "axios";
 
-const AllUsers = () => {
+const AllUsers = (props) => {
     const [users, setUsers] = useState([]);
     const [toApprove, setToApprove] = useState([]);
     const [display, setDisplay] = useState(true);
@@ -23,6 +25,17 @@ const AllUsers = () => {
         // Api.getUserFriendRequests(cookies.get('user')).then(response => {
         //     setToApprove(response.data);
         // })
+        // api/auth/all-users
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Token " + props.token,
+            },
+        };
+        axios.get(`api/auth/all-users`, config).then((response) => {
+            setUsers(response.data[0]);
+            console.log(response.data[0]);
+        });
     }, []);
 
     const handleSearch = (event) => {
@@ -53,23 +66,33 @@ const AllUsers = () => {
                             <input onChange={handleSearch} placeholder="search people" />
                         </div>
                     </div>
-                    {display ? (
-                        <div className={"users-list"}>
-                            {toPrint.map((user, key) => {
+
+                    {/* {users.map((user, key) => {
+                        return <User id={user.id} name={user.name} surname={user.surname} />;
+                    })} */}
+
+                     {display ? ( 
+                     <div className={"users-list"}>
+                            {users.map((user, key) => {
                                 return <User id={user.id} name={user.name} surname={user.surname} />;
                             })}
-                        </div>
-                    ) : (
+                        </div> 
+                     ) : (
                         <div className={"users-list"}>
-                            {toApprove.map((user, key) => {
+                            {users.map((user, key) => {
                                 return <Approve name={user.senderName} surname={user.senderSurname} id={user.senderId} />;
                             })}
                         </div>
-                    )}
+                    )} 
                 </div>
             </div>
         </>
     );
 };
 
-export default AllUsers;
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    token: state.auth.token,
+});
+
+export default connect(mapStateToProps, null)(AllUsers);

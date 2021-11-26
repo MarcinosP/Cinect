@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
-import Avatar from "@material-ui/core/Avatar";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import "./User.css";
-import { TiTick } from "react-icons/ti";
-import { ImCross } from "react-icons/im";
+import React, { useState, useEffect } from "react";
+import Snackbar from "@material-ui/core/Snackbar";
 import Button from "@material-ui/core/Button";
 import MuiAlert from "@material-ui/lab/Alert";
-// import {Api} from "../../apiHandler/apiHandler";
-import Snackbar from "@material-ui/core/Snackbar";
+import Avatar from "@material-ui/core/Avatar";
+import { ImCross } from "react-icons/im";
+import { TiTick } from "react-icons/ti";
+import { connect } from "react-redux";
+import axios from "axios";
+import "./User.css";
 
 const User = (props) => {
     const [open, setOpen] = useState(false);
@@ -57,19 +58,16 @@ const User = (props) => {
     };
 
     const addFriend = () => {
-        // const cookies = new Cookies();
-        // Api.addFriend(cookies.get('user'), props.id).then(response => {
-        //     setOpen(true);
-        //     console.log(response);
-        // }).catch(error => {
-        //     console.log(error)
-        // })
-        console.log("XD");
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Token " + props.token,
+            },
+        };
+        axios.post("api/friend-list", { user_requested: props.id }, config).then((response) => {
+        });
     };
 
-    useEffect(() => {
-        console.log(props.name);
-    }, []);
     return (
         <>
             {display ? (
@@ -126,4 +124,9 @@ const User = (props) => {
     );
 };
 
-export default User;
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    token: state.auth.token,
+});
+
+export default connect(mapStateToProps, null)(User);

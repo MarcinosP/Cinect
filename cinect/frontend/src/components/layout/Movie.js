@@ -5,7 +5,6 @@ import {withStyles} from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import {TiTick} from 'react-icons/ti';
 import {ImCross} from 'react-icons/im';
-// import {Api} from "../apiHandler/apiHandler";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import Cookies from "universal-cookie";

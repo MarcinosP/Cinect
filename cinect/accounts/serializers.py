@@ -2,7 +2,7 @@ from django.db.models import fields
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import UserDetails
+from .models import FriendList, UserDetails
 
 # User Serializer
 
@@ -42,7 +42,6 @@ class LoginSerializer(serializers.Serializer):
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):
-    # date_of_birth = serializers.DateTimeField(format="%d-%m-%Y")
     date_of_birth=serializers.DateField(format=None,input_formats=None)
     class Meta:
         model = UserDetails
@@ -50,3 +49,11 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return UserDetails.objects.create(**validated_data)
+
+class FriendListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FriendList
+        fields = "__all__"
+    def create(self, validated_data):
+        return FriendList.objects.create(**validated_data)
+

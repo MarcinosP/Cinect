@@ -5,12 +5,32 @@ import { withRouter } from "react-router";
 // import {withMedia} from 'react-media-query-hoc';
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/layout/Sidebar";
+import axios from "axios";
 
 const AddMovies = () => {
     const [movies, setMovies] = useState([]);
     const [toPrint, setToPrint] = useState([]);
 
     useEffect(() => {
+        const options = {
+            method: "GET",
+            url: "https://data-imdb1.p.rapidapi.com/movie/order/byRating/",
+            params: { page_size: "50" },
+            headers: {
+                "x-rapidapi-host": "data-imdb1.p.rapidapi.com",
+                "x-rapidapi-key": "660967386fmsh651b062d09a33c4p19cd73jsn494fc351a8b8",
+            },
+        };
+
+        axios
+            .request(options)
+            .then(function (response) {
+                setMovies(response.data.results);
+                console.log(response.data.results);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
         // Api.getAllMovies().then(response => {
         //     setMovies(response.data);
         //     setToPrint(response.data);
@@ -18,13 +38,13 @@ const AddMovies = () => {
     }, []);
 
     const handleSearch = (event) => {
-        if (event.target.value === "") {
-            setToPrint(movies);
-        } else {
-            const regex = new RegExp("^" + event.target.value, "i");
-            const tmp = movies.filter((movie) => regex.test(movie.title));
-            setToPrint(tmp);
-        }
+        // if (event.target.value === "") {
+        //     setToPrint(movies);
+        // } else {
+        //     const regex = new RegExp("^" + event.target.value, "i");
+        //     const tmp = movies.filter((movie) => regex.test(movie.title));
+        //     setToPrint(tmp);
+        // }
     };
 
     return (
@@ -40,7 +60,18 @@ const AddMovies = () => {
                         </div>
                     </div>
                     <div className="movies-list">
-                        {toPrint.map((movie, key) => {
+                        {movies.map((movie, key) => {
+                            return (
+                                <Movie
+                                    key={key}
+                                    id={key}
+                                    date={"no"}
+                                    title={movie.title}
+                                    rating={1}
+                                />
+                            );
+                        })}
+                        {/* {toPrint.map((movie, key) => {
                             return (
                                 <Movie
                                     key={key}
@@ -50,7 +81,7 @@ const AddMovies = () => {
                                     rating={movie.userRating}
                                 />
                             );
-                        })}
+                        })} */}
                     </div>
                 </div>
             </div>

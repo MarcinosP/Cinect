@@ -7,7 +7,6 @@ import {TiTick} from "react-icons/ti";
 import {ImCross} from "react-icons/im";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from '@material-ui/lab/Alert';
-// import {Api} from "../apiHandler/apiHandler";
 import Cookies from "universal-cookie";
 
 const Serie = (props) => {

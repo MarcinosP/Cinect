@@ -1,12 +1,14 @@
-import "../../../styles/Profile.css"
-import Header from "../Header";
+import FriendPreferences from "./FriendPreferences";
 import React, {useEffect, useState} from 'react';
 import Watched from "../Profile/Watched";
-// import {Api} from "../../apiHandler/apiHandler";
-import FriendInfo from "./FriendInfo";
-import FriendPreferences from "./FriendPreferences";
 import {useParams} from "react-router";
+import { connect } from "react-redux";
+import FriendInfo from "./FriendInfo";
+import "../../../styles/Profile.css"
 import Sidebar from "../Sidebar";
+import Header from "../Header";
+import axios from "axios";
+
 
 const ShowFriend = (props) => {
     let {id} = useParams();
@@ -24,53 +26,63 @@ const ShowFriend = (props) => {
     const [watchedList, setWatchedList] = useState({watched: []})
 
     useEffect(() => {
-        console.log(id);
-        Api.showUserInfo(id).then(response => {
-            console.log(id);
-            return response.data;
+        // console.log(id);
+        // Api.showUserInfo(id).then(response => {
+        //     console.log(id);
+        //     return response.data;
 
-        }).then(data => {
-            console.log(data);
-            setFriend(prevState => ({
-                name: data['name'],
-                id: data['id'],
-                surname: data['surname'],
-                nationality: data['nationality'],
-                languages: data['languages'],
-                dateOfBirth: data['dateOfBirth'].date.split(' ')[0],
-                timeMovies: data['wtm'],
-                timeSeries: data['wts']
-            }))
-        })
-            .catch(error => {
-                console.error(error);
-            })
+        // }).then(data => {
+        //     console.log(data);
+        //     setFriend(prevState => ({
+        //         name: data['name'],
+        //         id: data['id'],
+        //         surname: data['surname'],
+        //         nationality: data['nationality'],
+        //         languages: data['languages'],
+        //         dateOfBirth: data['dateOfBirth'].date.split(' ')[0],
+        //         timeMovies: data['wtm'],
+        //         timeSeries: data['wts']
+        //     }))
+        // })
+        //     .catch(error => {
+        //         console.error(error);
+        //     })
 
-        // add watched movies
-        Api.getWatchedMoviesByUser(id).then(response => {
-            console.log(response.data);
-            for (const responseElement of response.data) {
-                console.log(responseElement);
-                setWatchedList(prevState => (
-                    {
-                        watched: [...prevState.watched, responseElement]
-                    }
-                ))
-            }
-        })
+        // // add watched movies
+        // Api.getWatchedMoviesByUser(id).then(response => {
+        //     console.log(response.data);
+        //     for (const responseElement of response.data) {
+        //         console.log(responseElement);
+        //         setWatchedList(prevState => (
+        //             {
+        //                 watched: [...prevState.watched, responseElement]
+        //             }
+        //         ))
+        //     }
+        // })
 
-        // add watched series
-        Api.getWatchedSeriesByUser(id).then(response => {
-            console.log(response.data);
-            for (const responseElement of response.data) {
-                console.log(responseElement);
-                setWatchedList(prevState => (
-                    {
-                        watched: [...prevState.watched, responseElement]
-                    }
-                ))
-            }
-        })
+        // // add watched series
+        // Api.getWatchedSeriesByUser(id).then(response => {
+        //     console.log(response.data);
+        //     for (const responseElement of response.data) {
+        //         console.log(responseElement);
+        //         setWatchedList(prevState => (
+        //             {
+        //                 watched: [...prevState.watched, responseElement]
+        //             }
+        //         ))
+        //     }
+        // })
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Token " + props.token,
+            },
+        };
+        axios.get(`api/auth/user-details/${id}`, config).then((response) => {
+            console.log(response.data)
+            setFriend(response.data[0]);
+        });
     }, [])
 
     return (
@@ -82,9 +94,9 @@ const ShowFriend = (props) => {
                     <div className='info' onClick={() => {
                         console.log(friend.name + " " + friend.surname)
                     }}>
-                        <FriendInfo name={friend.name + " " + friend.surname} dateOfBirth={friend.dateOfBirth}
+                        <FriendInfo name={friend.name + " " + friend.surname} dateOfBirth={friend.date_of_birth}
                                     nationality={friend.nationality} languages={friend.languages}/>
-                        <FriendPreferences timeMovies={friend.timeMovies} timeSeries={friend.timeSeries}/>
+                        <FriendPreferences timeMovies={friend.watched_time_movies} timeSeries={friend.watched_time_series}/>
                     </div>
 
                     <div onClick={() => console.log(watchedList)} className='watched'>
@@ -104,6 +116,9 @@ const ShowFriend = (props) => {
     );
 };
 
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    token: state.auth.token,
+});
 
-export default ShowFriend;
-
+export default connect(mapStateToProps, null)(ShowFriend);

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/layout/Header";
 import "../styles/AllUsers.css";
-// import {Api} from "../apiHandler/apiHandler";
 import Friend from "../components/layout/ShowFriend/Friend";
 import { useHistory } from "react-router";
 import Sidebar from "../components/layout/Sidebar";
+import { connect } from "react-redux";
 // import Cookies from "universal-cookie";
+import axios from "axios";
 
-const FriendList = () => {
+const FriendList = (props) => {
     const [users, setUsers] = useState([]);
-    const [toPrint, setToPrint] = useState([]);
+    const [friendList, setFriendList] = useState([]);
 
     let history = useHistory();
     const showUserHandler = (id) => {
@@ -17,11 +18,17 @@ const FriendList = () => {
     };
 
     useEffect(() => {
-        // const cookies = new Cookies();
-        // Api.getUserFriends(cookies.get('user')).then(response => {
-        //     setUsers(response.data);
-        //     setToPrint(response.data);
-        // })
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Token " + props.token,
+            },
+        };
+
+        axios.get("api/friend-list", config).then((response) => {
+            const fList = response.data.filter((e) => e.confirmed == true);
+            setFriendList(fList);
+        });
     }, []);
 
     const handleSearch = (event) => {
@@ -49,8 +56,8 @@ const FriendList = () => {
                     </div>
 
                     <div className={"users-list"}>
-                        {toPrint.map((user, key) => {
-                            return <Friend id={user.id} name={user.name} surname={user.surname} handler={showUserHandler} />;
+                        {friendList.map((user, key) => {
+                            return <Friend name={user.name} surname={user.surname} id={user.id} handler={showUserHandler} />;
                         })}
                     </div>
                 </div>
@@ -59,4 +66,9 @@ const FriendList = () => {
     );
 };
 
-export default FriendList;
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    token: state.auth.token,
+});
+
+export default connect(mapStateToProps, null)(FriendList);

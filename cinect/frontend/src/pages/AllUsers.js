@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/layout/Header";
 import "../styles/AllUsers.css";
-// import {Api} from "../apiHandler/apiHandler";
 import User from "../components/layout/AllUsers/User";
 import { FaExchangeAlt } from "react-icons/fa";
 import Approve from "../components/layout/AllUsers/Approve";
@@ -9,7 +8,6 @@ import Sidebar from "../components/layout/Sidebar";
 // import Cookies from "universal-cookie";
 import { connect } from "react-redux";
 import axios from "axios";
-
 const AllUsers = (props) => {
     const [users, setUsers] = useState([]);
     const [toApprove, setToApprove] = useState([]);
@@ -17,25 +15,7 @@ const AllUsers = (props) => {
     const [toPrint, setToPrint] = useState([]);
 
     useEffect(() => {
-        // Api.getAllUsers().then(response => {
-        //     setUsers(response.data);
-        //     setToPrint(response.data);
-        // })
-        // const cookies = new Cookies();
-        // Api.getUserFriendRequests(cookies.get('user')).then(response => {
-        //     setToApprove(response.data);
-        // })
-        // api/auth/all-users
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Token " + props.token,
-            },
-        };
-        axios.get(`api/auth/all-users`, config).then((response) => {
-            setUsers(response.data[0]);
-            console.log(response.data[0]);
-        });
+        refreshParent();
     }, []);
 
     const handleSearch = (event) => {
@@ -46,6 +26,23 @@ const AllUsers = (props) => {
             const tmp = users.filter((user) => regex.test(user.name));
             setToPrint(tmp);
         }
+    };
+
+    const refreshParent = () => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Token " + props.token,
+            },
+        };
+
+        axios.get(`api/auth/all-users`, config).then((response) => {
+            setUsers(response.data[0]);
+        });
+        axios.get("api/friend-list", config).then((response) => {
+            const listToApprove = response.data.filter((e) => e.confirmed == false);
+            setToApprove(listToApprove);
+        });
     };
 
     return (
@@ -67,23 +64,19 @@ const AllUsers = (props) => {
                         </div>
                     </div>
 
-                    {/* {users.map((user, key) => {
-                        return <User id={user.id} name={user.name} surname={user.surname} />;
-                    })} */}
-
-                     {display ? ( 
-                     <div className={"users-list"}>
+                    {display ? (
+                        <div className={"users-list"}>
                             {users.map((user, key) => {
                                 return <User id={user.id} name={user.name} surname={user.surname} />;
                             })}
-                        </div> 
-                     ) : (
+                        </div>
+                    ) : (
                         <div className={"users-list"}>
-                            {users.map((user, key) => {
-                                return <Approve name={user.senderName} surname={user.senderSurname} id={user.senderId} />;
+                            {toApprove.map((user, key) => {
+                                return <Approve name={user.name} surname={user.surname} id={user.id} refreshParent={refreshParent}/>;
                             })}
                         </div>
-                    )} 
+                    )}
                 </div>
             </div>
         </>

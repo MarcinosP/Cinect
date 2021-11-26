@@ -36,7 +36,7 @@ const ProfileInfo = (props) => {
                 <div className="text-info-higher">{props.name}</div>
                 <div className="text-lower">Date of birth</div>
                 <div className="text-info-higher">
-                    {props.dateOfBirth.split("T")[0]}
+                    {props.dateOfBirth != undefined ? props.dateOfBirth.split("T")[0] : props.dateOfBirth}
                 </div>
                 <div className="text-lower">Nationality</div>
                 <div className="text-info-higher">{props.nationality}</div>

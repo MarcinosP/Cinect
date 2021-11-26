@@ -5,9 +5,9 @@
 }
 
 .series-container {
-    margin: 0vh auto 1vh auto;
+    margin: 0vh auto 1vh 1vw;
     min-height: 100%;
-    width: 80%;
+    width: 85%;
     background-color: #28293d;
     border-radius: 1em;
     display: flex;

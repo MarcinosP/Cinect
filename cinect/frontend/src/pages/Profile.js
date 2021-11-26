@@ -47,7 +47,7 @@ const Profile = (props) => {
                         <ProfilePreferences timeMovies={userData.watched_time_movies} timeSeries={userData.watched_time_series} />
                     </div>
 
-                    <div onClick={() => console.log(userData)} className="watched">
+                    <div className="watched">
                         <div className="text-lower1">viewing history</div>
                         <div className="watched-list">
                             {/* {watchedList.watched.map((watched, key) => {

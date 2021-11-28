@@ -52,3 +52,12 @@
 
 }
 
+.movie-info-component{
+    display: flex;
+}
+
+.movie-info-component-content{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+}

@@ -1,21 +1,20 @@
-import Rating from "@material-ui/lab/Rating";
-import "./Movie.css";
-import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import { TiTick } from "react-icons/ti";
-import { ImCross } from "react-icons/im";
+import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import Cookies from "universal-cookie";
-import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Rating from "@material-ui/lab/Rating";
 import Modal from "@material-ui/core/Modal";
+import { ImCross } from "react-icons/im";
+import { TiTick } from "react-icons/ti";
+import SimpleModal from "./SimpleModal";
+import Cookies from "universal-cookie";
+import "./Movie.css";
 
 const MovieAPI = (props) => {
-    //snackbar
-
-    const [open, setOpen] = React.useState(false);
-    const [isClicked, setIsClicked] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [isClicked, setIsClicked] = useState(true);
     const [ratingNew, setRatingNew] = useState(-1);
 
     const handleClose = (event, reason) => {
@@ -25,7 +24,7 @@ const MovieAPI = (props) => {
 
         setOpen(false);
     };
-    //snackbar
+
     const StyledRating = withStyles({
         iconFilled: {
             color: "#8cfac4",
@@ -43,6 +42,12 @@ const MovieAPI = (props) => {
     const StyledDecline = withStyles({
         text: {
             color: "#A3270C",
+            fontSize: "1.4em",
+        },
+    })(Button);
+    const StyledInfo = withStyles({
+        text: {
+            color: "#adadad",
             fontSize: "1.4em",
         },
     })(Button);
@@ -77,56 +82,47 @@ const MovieAPI = (props) => {
     return (
         <>
             <div className="movie-component">
-                {/* {isClicked ?  */}
-
-                <div
-                    onClick={() => {
-                        setIsClicked(!isClicked);
-                    }}
-                >
-                    <div className="movie-component-content">
-                        <div className={"text-lower"}>Title</div>
-                        <div className={"text-higher"}>{props.title}</div>
+                {isClicked ? (
+                    <div
+                        onClick={() => {
+                            setIsClicked(!isClicked);
+                        }}
+                    >
+                        <div className="movie-component-content">
+                            <div className={"text-lower"}>Title</div>
+                            <div className={"text-higher"}>{props.title}</div>
+                        </div>
                     </div>
-                </div>
-
-                {/* <Modal
-                    open={isClicked}
-                    onClose={handleClose}
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                >
-                    <div style={useStyles} className={classes.paper}>
-                        <h2 id="simple-modal-title">Text in a modal</h2>
-                        <p id="simple-modal-description">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-                        
-                    </div>
-                </Modal> */}
-
-                {/* :
-                        <div>
-                            <div className={"movie-component-after"}>
-                                <div className={"text-lower"}>
-                                    Add {props.title} to watched list!
-                                </div>
-                                <div className={"text-higher"}>
-                                    rate movie:
-                                </div>
-                                <StyledRating onChange={(event, value) => {
-                                    setRatingNew(value)
-                                }} precision={1}/>
-                                <div className={"text-lower"}>
-                                    Confirm?
-                                </div>
-                                <div>
-                                    <StyledAccept onClick={addWatchedMovie}><TiTick/></StyledAccept>
-                                    <StyledDecline onClick={() => {
-                                        setIsClicked(!isClicked)
-                                    }}><ImCross/></StyledDecline>
-                                </div>
-
+                ) : (
+                    <div>
+                        <div className={"movie-component-after"}>
+                            <div className={"text-lower"}>Add {props.title} to watched list!</div>
+                            <div className={"text-higher"}>rate movie:</div>
+                            <StyledRating
+                                onChange={(event, value) => {
+                                    setRatingNew(value);
+                                }}
+                                precision={1}
+                            />
+                            <div className={"text-lower"}>Confirm?</div>
+                            <div>
+                                <StyledAccept onClick={addWatchedMovie}>
+                                    <TiTick />
+                                </StyledAccept>
+                                <StyledDecline
+                                    onClick={() => {
+                                        setIsClicked(!isClicked);
+                                    }}
+                                >
+                                    <ImCross />
+                                </StyledDecline>
+                                <StyledInfo>
+                                    <SimpleModal type="movie" id={props.id} />
+                                </StyledInfo>
                             </div>
-                        </div>} */}
+                        </div>
+                    </div>
+                )}
             </div>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">

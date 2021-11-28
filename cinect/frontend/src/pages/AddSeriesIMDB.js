@@ -1,46 +1,38 @@
-import "../styles/AddSeries.css";
-import Header from "../components/layout/Header";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import useSearchSeries from "../customHooks/useSearchSeries";
+import useDebounce from "../customHooks/useDebounce";
 import SerieAPI from "../components/layout/SerieAPI";
-import React, { useEffect, useState } from "react";
 import Sidebar from "../components/layout/Sidebar";
+import Header from "../components/layout/Header";
+import "../styles/AddSeries.css";
 import axios from "axios";
 
 const AddSeriesIMDB = () => {
-    const [series, setSeries] = useState([]);
-    const [toPrint, setToPrint] = useState([]);
+    const [query, setQuery] = useState("");
+    const [pageNumber, setPageNumber] = useState(1);
+    const debounceValue = useDebounce(query, 500);
 
-    useEffect(() => {
-        const options = {
-            method: "GET",
-            url: "https://data-imdb1.p.rapidapi.com/series/order/byRating/",
-            params: { page_size: "50" },
-            headers: {
-                "x-rapidapi-host": "data-imdb1.p.rapidapi.com",
-                "x-rapidapi-key": "660967386fmsh651b062d09a33c4p19cd73jsn494fc351a8b8",
-            },
-        };
+    const { series , hasMore, loading, error } = useSearchSeries(debounceValue, pageNumber);
 
-        axios
-            .request(options)
-            .then(function (response) {
-                // console.log(response.data);
-                setSeries(response.data.results);
-            })
-            .catch(function (error) {
-                console.error(error);
+    const observer = useRef();
+    const lastSeriesElementRef = useCallback(
+        (node) => {
+            if (loading) return;
+            if (observer.current) observer.current.disconnect();
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && hasMore) {
+                    setPageNumber((prevPageNumber) => prevPageNumber + 1);
+                }
             });
-    }, []);
+            if (node) observer.current.observe(node);
+        },
+        [loading, hasMore]
+    );
 
-    const handleSearch = (event) => {
-        // if (event.target.value === "") {
-        //     setToPrint(series);
-        // } else {
-        //     const regex = new RegExp("^" + event.target.value, "i");
-        //     const tmp = series.filter((serie) => regex.test(serie.title));
-        //     setToPrint(tmp);
-        // }
-    };
-
+    function handleSearch(e) {
+        setQuery(e.target.value);
+        setPageNumber(1);
+    }
     return (
         <div>
             <Header />
@@ -54,9 +46,21 @@ const AddSeriesIMDB = () => {
                         </div>
                     </div>
                     <div className="series-list">
-                        {series.map((serie, key) => {
-                            return <SerieAPI key={key} id={key} date={"no"} title={serie.title} rating={1} />;
-                        })}
+                    <>
+                            {series.map((serie, key) => {
+                                if (series.length === key + 1) {
+                                    return (
+                                        <div ref={lastSeriesElementRef} key={key}>
+                                            <SerieAPI key={key} id={serie.imdb_id} date={"no"} title={serie.title} rating={1} />
+                                        </div>
+                                    );
+                                } else {
+                                    return <SerieAPI key={key} id={serie.imdb_id} date={"no"} title={serie.title} rating={1} />;
+                                }
+                            })}
+                            <div>{loading && "Loading..."}</div>
+                            <div>{error && "Error"}</div>
+                        </>
                     </div>
                 </div>
             </div>

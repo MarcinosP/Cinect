@@ -1,51 +1,38 @@
-import Header from "../components/layout/Header";
-import "../styles/AddMovies.css";
+import useSearchMovies from "../customHooks/useSearchMovies";
+import React, { useState, useRef, useCallback } from "react";
 import MovieAPI from "../components/layout/MovieAPI";
-import { withRouter } from "react-router";
-// import {withMedia} from 'react-media-query-hoc';
-import React, { useEffect, useState } from "react";
+import useDebounce from "../customHooks/useDebounce";
 import Sidebar from "../components/layout/Sidebar";
-import axios from "axios";
+import Header from "../components/layout/Header";
+import { withRouter } from "react-router";
+import "../styles/AddMovies.css";
 
 const AddMoviesIMDB = () => {
-    const [movies, setMovies] = useState([]);
-    const [toPrint, setToPrint] = useState([]);
+    const [query, setQuery] = useState("");
+    const [pageNumber, setPageNumber] = useState(1);
+    const debounceValue = useDebounce(query, 500);
 
-    useEffect(() => {
-        const options = {
-            method: "GET",
-            url: "https://data-imdb1.p.rapidapi.com/movie/order/byRating/",
-            params: { page_size: "50" },
-            headers: {
-                "x-rapidapi-host": "data-imdb1.p.rapidapi.com",
-                "x-rapidapi-key": "660967386fmsh651b062d09a33c4p19cd73jsn494fc351a8b8",
-            },
-        };
+    const { movies, hasMore, loading, error } = useSearchMovies(debounceValue, pageNumber);
 
-        axios
-            .request(options)
-            .then(function (response) {
-                setMovies(response.data.results);
-                console.log(response.data.results);
-            })
-            .catch(function (error) {
-                console.error(error);
+    const observer = useRef();
+    const lastMoviesElementRef = useCallback(
+        (node) => {
+            if (loading) return;
+            if (observer.current) observer.current.disconnect();
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && hasMore) {
+                    setPageNumber((prevPageNumber) => prevPageNumber + 1);
+                }
             });
-        // Api.getAllMovies().then(response => {
-        //     setMovies(response.data);
-        //     setToPrint(response.data);
-        // })
-    }, []);
+            if (node) observer.current.observe(node);
+        },
+        [loading, hasMore]
+    );
 
-    const handleSearch = (event) => {
-        // if (event.target.value === "") {
-        //     setToPrint(movies);
-        // } else {
-        //     const regex = new RegExp("^" + event.target.value, "i");
-        //     const tmp = movies.filter((movie) => regex.test(movie.title));
-        //     setToPrint(tmp);
-        // }
-    };
+    function handleSearch(e) {
+        setQuery(e.target.value);
+        setPageNumber(1);
+    }
 
     return (
         <div>
@@ -60,28 +47,21 @@ const AddMoviesIMDB = () => {
                         </div>
                     </div>
                     <div className="movies-list">
-                        {movies.map((movie, key) => {
-                            return (
-                                <MovieAPI
-                                    key={key}
-                                    id={key}
-                                    date={"no"}
-                                    title={movie.title}
-                                    rating={1}
-                                />
-                            );
-                        })}
-                        {/* {toPrint.map((movie, key) => {
-                            return (
-                                <Movie
-                                    key={key}
-                                    id={movie.id}
-                                    date={movie.creationDate.date.split(" ")[0]}
-                                    title={movie.title}
-                                    rating={movie.userRating}
-                                />
-                            );
-                        })} */}
+                        <>
+                            {movies.map((movie, key) => {
+                                if (movies.length === key + 1) {
+                                    return (
+                                        <div ref={lastMoviesElementRef} key={key}>
+                                            <MovieAPI key={key} id={movie.imdb_id} date={"no"} title={movie.title} rating={1} />
+                                        </div>
+                                    );
+                                } else {
+                                    return <MovieAPI key={key} id={movie.imdb_id} date={"no"} title={movie.title} rating={1} />;
+                                }
+                            })}
+                            <div>{loading && "Loading..."}</div>
+                            <div>{error && "Error"}</div>
+                        </>
                     </div>
                 </div>
             </div>

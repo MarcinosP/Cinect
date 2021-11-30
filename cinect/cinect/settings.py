@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'leads',
     'frontend',
     'accounts',
+    'movieseriescollection'
 ]
 
 REST_FRAMEWORK = {

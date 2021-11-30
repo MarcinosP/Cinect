@@ -1,12 +1,12 @@
 import { ProSidebar, SidebarFooter, Menu, MenuItem, SubMenu, SidebarContent, SidebarHeader } from "react-pro-sidebar";
-import "react-pro-sidebar/dist/css/styles.css";
-import { BiCameraMovie, BiLogOutCircle } from "react-icons/bi";
-import { RiMovieLine } from "react-icons/ri";
 import { FiUsers, FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";
-import { HiOutlineUserAdd } from "react-icons/hi";
-import { CgProfile } from "react-icons/cg";
-import { FiSettings } from "react-icons/fi";
+import { BiCameraMovie, BiLogOutCircle } from "react-icons/bi";
 import { GiHamburgerMenu, GiBookshelf } from "react-icons/gi";
+import { HiOutlineUserAdd } from "react-icons/hi";
+import "react-pro-sidebar/dist/css/styles.css";
+import { RiMovieLine } from "react-icons/ri";
+import { FiSettings } from "react-icons/fi";
+import { CgProfile } from "react-icons/cg";
 import { FaImdb } from "react-icons/fa";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";

@@ -9,6 +9,8 @@ import React, { useState } from "react";
 import SimpleModal from "./SimpleModal";
 import { TiTick } from "react-icons/ti";
 import Cookies from "universal-cookie";
+import { connect } from "react-redux";
+import axios from "axios";
 import "./Serie.css";
 
 const SerieAPI = (props) => {
@@ -55,17 +57,44 @@ const SerieAPI = (props) => {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
     }
 
-    const addWatchedSeries = () => {
-        // const cookies = new Cookies();
-        // console.log(props.id + " " + ratingNew);
-        // Api.addWatchedSeriesByUser(cookies.get('user'), props.id, ratingNew).then(() => {
-        //         setOpen(true);
-        //     }
-        // ).catch(error => {
-        //     console.log(error);
-        // })
-    };
+    const addWatchedSeries = async() => {
+            const options = {
+                method: "GET",
+                url: `https://data-imdb1.p.rapidapi.com/series/id/${props.id}/`,
+                headers: {
+                    "x-rapidapi-host": "data-imdb1.p.rapidapi.com",
+                    "x-rapidapi-key": "660967386fmsh651b062d09a33c4p19cd73jsn494fc351a8b8",
+                },
+            };
 
+            await axios
+                .request(options)
+                .then(function (response1) {
+                    const config = {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: "Token " + props.token,
+                        },
+                    };
+
+                    const body = {
+                        title: props.title,
+                        rating: ratingNew,
+                        foreign_id: props.id,
+                        length: response1.data.results.movie_length,
+                        is_series: true,
+                        created_at: response1.data.results.created_at,
+                        is_imdb: true,
+                    };
+                    console.log(response1);
+                    axios.post(`api/movie-series-imdb`, body, config).then((response2) => {
+                        setOpen(true);
+                    });
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        };
     const useStyles = makeStyles((theme) => ({
         paper: {
             position: "absolute",
@@ -131,4 +160,9 @@ const SerieAPI = (props) => {
     );
 };
 
-export default SerieAPI;
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    token: state.auth.token,
+});
+
+export default connect(mapStateToProps, null)(SerieAPI);

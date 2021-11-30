@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 
 const Profile = (props) => {
+    const [watched, setWatched] = useState([])
     const [userData, setUserData] = useState({
         name: "",
         surname: "",
@@ -29,6 +30,12 @@ const Profile = (props) => {
         axios.get(`api/auth/user-details/${props.user.id}`, config).then((response) => {
             setUserData(response.data[0]);
         });
+
+        
+        axios.get('api/get-watched',config).then(r=>{
+            setWatched(r.data)
+            console.log(r.data)
+        })
     }, []);
 
     return (
@@ -50,16 +57,16 @@ const Profile = (props) => {
                     <div className="watched">
                         <div className="text-lower1">viewing history</div>
                         <div className="watched-list">
-                            {/* {watchedList.watched.map((watched, key) => {
+                            {watched.map((w, key) => {
                                 return (
                                     <Watched
                                         key={key}
-                                        date={watched.watchedAtDate.date.split(" ")[0]}
-                                        title={watched.title}
-                                        rating={watched.userRating}
+                                        date={w?.user_detalis?.watched_at}
+                                        title={w?.info?.title}
+                                        rating={w?.user_detalis?.rating}
                                     />
                                 );
-                            })} */}
+                            })}
                         </div>
                     </div>
                 </div>

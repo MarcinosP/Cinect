@@ -40,10 +40,10 @@ const FriendInfo = (props) => {
                     {props.name}
                 </div>
                 <div className='text-lower'>
-                    DoB
+                    Date of birth
                 </div>
                 <div className='text-info-higher'>
-                    {props.dateOfBirth}
+                    {props.dateOfBirth != undefined ? props.dateOfBirth.split("T")[0] : props.dateOfBirth}
                 </div>
                 <div className='text-lower'>
                     Nationality

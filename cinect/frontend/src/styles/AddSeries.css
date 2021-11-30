@@ -57,6 +57,51 @@
     margin: 1vh 1vw 1vh 1vw;
 }
 
+.series-filter-left {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1 / 2;
+}
+.series-filter-right {
+    display: flex;
+    flex-direction: column;
+    grid-column: 3 / 5;
+}
+
+.dotted-button {
+    height: 1em;
+    width: 1em;
+    background-color: inherit;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid white;
+    margin-left: 0.5vw;
+}
+
+.dotted-button-pressed {
+    height: 1em;
+    width: 1em;
+    background-color: inherit;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid white;
+    background-color: #f1802d;
+    margin-left: 0.5vw;
+}
+
+.input-filter {
+    background: transparent;
+    width: 20%;
+    color: #fff;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #f1802d;
+    margin-left: 0.5vw;
+}
+
+
 @media only screen and (max-device-width: 700px) {
     * {
         font-size: 1.1em;

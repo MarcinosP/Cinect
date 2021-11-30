@@ -5,17 +5,17 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import Rating from "@material-ui/lab/Rating";
-import Modal from "@material-ui/core/Modal";
 import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
 import SimpleModal from "./SimpleModal";
-import Cookies from "universal-cookie";
+import { connect } from "react-redux";
+import axios from "axios";
 import "./Movie.css";
 
 const MovieAPI = (props) => {
     const [open, setOpen] = useState(false);
     const [isClicked, setIsClicked] = useState(true);
-    const [ratingNew, setRatingNew] = useState(-1);
+    const [ratingNew, setRatingNew] = useState(0);
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -56,16 +56,42 @@ const MovieAPI = (props) => {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
     }
 
-    const addWatchedMovie = () => {
-        // const cookies = new Cookies();
-        // console.log(props.id + " " + ratingNew);
-        // Api.addWatchedMoviesByUser(cookies.get('user'), props.id, ratingNew).then(response => {
-        //     setOpen(true);
-        //     console.log(response);
-        // }).catch(error => {
-        //     console.log(error)
-        // })
-        console.log("XD");
+    const addWatchedMovie = async () => {
+        const options = {
+            method: "GET",
+            url: `https://data-imdb1.p.rapidapi.com/movie/id/${props.id}/`,
+            headers: {
+                "x-rapidapi-host": "data-imdb1.p.rapidapi.com",
+                "x-rapidapi-key": "660967386fmsh651b062d09a33c4p19cd73jsn494fc351a8b8",
+            },
+        };
+        await axios
+            .request(options)
+            .then(function (response1) {
+                const config = {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Token " + props.token,
+                    },
+                };
+
+                const body = {
+                    title: props.title,
+                    rating: ratingNew,
+                    foreign_id: props.id,
+                    length: response1.data.results.movie_length,
+                    is_movie: true,
+                    created_at: response1.data.results.created_at,
+                    is_imdb: true
+                };
+                console.log(response1);
+                axios.post(`api/movie-series-imdb`, body, config).then((response2) => {
+                    setOpen(true);
+                });
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
     };
 
     const useStyles = makeStyles((theme) => ({
@@ -133,4 +159,9 @@ const MovieAPI = (props) => {
     );
 };
 
-export default MovieAPI;
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    token: state.auth.token,
+});
+
+export default connect(mapStateToProps, null)(MovieAPI);

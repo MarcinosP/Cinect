@@ -10,7 +10,8 @@ const Watched = (props) => {
                     Watched in
                 </div>
                 <div className={"text-higher-watched"}>
-                    {props.date}
+                    {props.date != undefined ? props.date.split("T")[0] : props.date}
+
                 </div>
                 <div className={"text-lower"}>
                     Title

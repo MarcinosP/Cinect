@@ -97,8 +97,8 @@ const AddSeriesIMDB = () => {
 
     const handleFilter = (e) => {
         const initState = {
-            byTitle: false,
-            byYear: false,
+            byTitle: "",
+            byYear: "",
             byRating: false,
             byPopularity: false,
             byGenre: "",

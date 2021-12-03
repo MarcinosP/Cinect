@@ -195,8 +195,8 @@ const AddMoviesIMDB = () => {
                             {movies.map((movie, key) => {
                                 if (movies.length === key + 1) {
                                     return (
-                                        <div ref={lastMoviesElementRef} key={key}>
-                                            <MovieAPI key={key} id={movie.imdb_id} date={"no"} title={movie.title} rating={1} />
+                                        <div ref={lastMoviesElementRef} key={movie.imdb_id}>
+                                            <MovieAPI key={movie.imdb_id} id={movie.imdb_id} date={"no"} title={movie.title} rating={1} />
                                         </div>
                                     );
                                 } else {

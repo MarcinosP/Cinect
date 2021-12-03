@@ -194,8 +194,8 @@ const AddSeriesIMDB = () => {
                             {series.map((serie, key) => {
                                 if (series.length === key + 1) {
                                     return (
-                                        <div ref={lastSeriesElementRef} key={key}>
-                                            <SerieAPI key={key} id={serie.imdb_id} date={"no"} title={serie.title} rating={1} />
+                                        <div ref={lastSeriesElementRef} key={serie.imdb_id}>
+                                            <SerieAPI key={serie.imdb_id} id={serie.imdb_id} date={"no"} title={serie.title} rating={1} />
                                         </div>
                                     );
                                 } else {

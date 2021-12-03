@@ -93,6 +93,37 @@ class MovieSeriesIMDBGenericApi(
         return Response({"count": count[0]}, status=status.HTTP_200_OK)
 
 
+class MovieSeriesCinectGenericApi(
+        generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    queryset = MovieSeries.objects.all().order_by('-pk')
+    serializer_class = MovieSeriesSerialzier
+
+    def get(self, request, pk=None):
+        return self.list(request)
+
+    def post(self, request, pk=None):
+
+        return Response({
+            'data': self.create(request).data
+        })
+
+    def delete(self, request):
+        data = request.data
+        if 'ids' not in data:
+            raise exceptions.APIException('Invalid request!')
+        try:
+            count = MovieSeries.objects.filter(
+                id__in=request.data['ids']).delete()
+        except (ProtectedError, IntegrityError) as e:
+            return Response({"message": str(e)}, status=status.HTTP_409_CONFLICT)
+
+        return Response({"count": count[0]}, status=status.HTTP_200_OK)
+
+
 @api_view(['GET'])
 def movie_series_watched(request, pk=None):
     resp = {}
@@ -111,8 +142,5 @@ def movie_series_watched(request, pk=None):
         resp_obj["info"] = MovieSeriesSerialzier(
             m.movie_series, many=False).data
         watched_models.append(resp_obj)
-
-    # resp['movies'] = ProcedureFormSerializer(ProcedureSection.objects.filter(version = request.GET['version']).order_by("pk"), many = True).data
-    # resp['series'] = ProcedureFormSerializer(ProcedureSubsection.objects.filter(section = request.GET['section']).order_by("pk"), many = True).data
 
     return Response(watched_models)

@@ -31,7 +31,7 @@ export default function useSearchMovies(query, pageNumber) {
         axios({
             method: "GET",
             url: myUrl,
-            params: { page_size: "25", q: query, page: pageNumber },
+            params: { page_size: "50", page: pageNumber },
             headers: {
                 "x-rapidapi-host": "data-imdb1.p.rapidapi.com",
                 "x-rapidapi-key": "660967386fmsh651b062d09a33c4p19cd73jsn494fc351a8b8",

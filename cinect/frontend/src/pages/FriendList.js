@@ -48,7 +48,7 @@ const FriendList = (props) => {
                 <Sidebar />
                 <div className="all-users">
                     <div className="all-users-search">
-                        <div className="all-users-search-filter">Friend List</div>
+                        <div className="all-users-search-filter"></div>
 
                         <div className="all-users-search-bar">
                             <input onChange={handleSearch} placeholder="search people" />

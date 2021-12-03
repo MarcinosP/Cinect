@@ -10,25 +10,25 @@ const AddSeries = () => {
     const [toPrint, setToPrint] = useState([]);
 
     useEffect(() => {
-        const options = {
-            method: "GET",
-            url: "https://data-imdb1.p.rapidapi.com/series/order/byRating/",
-            params: { page_size: "50" },
-            headers: {
-                "x-rapidapi-host": "data-imdb1.p.rapidapi.com",
-                "x-rapidapi-key": "660967386fmsh651b062d09a33c4p19cd73jsn494fc351a8b8",
-            },
-        };
+        // const options = {
+        //     method: "GET",
+        //     url: "https://data-imdb1.p.rapidapi.com/series/order/byRating/",
+        //     params: { page_size: "50" },
+        //     headers: {
+        //         "x-rapidapi-host": "data-imdb1.p.rapidapi.com",
+        //         "x-rapidapi-key": "660967386fmsh651b062d09a33c4p19cd73jsn494fc351a8b8",
+        //     },
+        // };
 
-        axios
-            .request(options)
-            .then(function (response) {
-                // console.log(response.data);
-                setSeries(response.data.results);
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
+        // axios
+        //     .request(options)
+        //     .then(function (response) {
+        //         // console.log(response.data);
+        //         setSeries(response.data.results);
+        //     })
+        //     .catch(function (error) {
+        //         console.error(error);
+        //     });
     }, []);
 
     const handleSearch = (event) => {

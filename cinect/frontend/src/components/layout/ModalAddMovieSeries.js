@@ -2,12 +2,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React, { useEffect, useState } from "react";
+import Button from "@material-ui/core/Button";
 import Rating from "@material-ui/lab/Rating";
 import Modal from "@material-ui/core/Modal";
 import { GoInfo } from "react-icons/go";
 import { GrAdd } from "react-icons/gr";
-import axios from "axios";
+import { TiTick } from "react-icons/ti";
+import { connect } from "react-redux";
 import "./ModalAddMovieSeries.scss";
+import axios from "axios";
 
 function getModalStyle() {
     const top = 50;
@@ -62,41 +65,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ModalAddMovieSeries(props) {
+function ModalAddMovieSeries(props) {
     const classes = useStyles();
     // getModalStyle is not a pure function, we roll the style only on the first render
     const [modalStyle] = useState(getModalStyle);
-    const [newMovie, setNewMovie] = useState({
+    const [newObject, setNewObject] = useState({
         title: "",
         length: 0,
-        date: "",
+        date: "2020-01-01",
     });
     const [open, setOpen] = useState(false);
     const [imdbInfo, setImdbInfo] = useState({});
-
-    useEffect(() => {
-        // if (open == true) {
-        //     getMovieInfo();
-        // }
-    }, [open]);
-
-    const getMovieInfo = async () => {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Token " + props.token,
-            },
-        };
-
-        await axios
-            .post(`api/movie-series-cinect`, newMovie, config)
-            .then(function (response) {
-                console.log("XD")
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
-    };
 
     const handleOpen = (e) => {
         e.stopPropagation();
@@ -108,8 +87,35 @@ export default function ModalAddMovieSeries(props) {
         setOpen(false);
     };
 
-    const handleChangeNewMovie = (e) => {
-        setNewMovie({ ...newMovie, [e.target.name]: e.target.value });
+    const handleChangeNewObject = (e) => {
+        e.preventDefault();
+        setNewObject({ ...newObject, [e.target.name]: e.target.value });
+    };
+
+    const StyledAccept = withStyles({
+        text: {
+            color: "#8cfac4",
+            fontSize: "1em",
+        },
+    })(Button);
+
+    const handleCreate = (e) => {
+        e.preventDefault();
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Token " + props.token,
+            },
+        };
+        if (props.isMovie == true) {
+            axios.post(`api/movie-series-cinect`, { ...newObject, is_movie: true }, config).then((response) => {
+                console.log(response);
+            });
+        } else {
+            axios.post(`api/movie-series-cinect`, { ...newObject, is_series: true }, config).then((response) => {
+                console.log(response);
+            });
+        }
     };
 
     return (
@@ -123,32 +129,44 @@ export default function ModalAddMovieSeries(props) {
                     <div className="add-movie-series">
                         <div> Add movie </div>
                         <CssTextField
-                            onChange={handleChangeNewMovie}
-                            value={newMovie.title}
+                            onChange={handleChangeNewObject}
+                            value={newObject.title}
                             id="outlined-basic"
                             label="Title"
+                            name="title"
                             variant="outlined"
                         />
                         <CssTextField
-                            onChange={handleChangeNewMovie}
-                            value={newMovie.length}
+                            onChange={handleChangeNewObject}
+                            value={newObject.length}
                             id="outlined-basic"
                             label="Length"
+                            name="length"
                             type="number"
                             variant="outlined"
                         />
                         <CssTextField
-                            onChange={handleChangeNewMovie}
-                            value={newMovie.date}
+                            onChange={handleChangeNewObject}
+                            value={newObject.date}
                             id="outlined-basic"
-                            defaultValue="2020-01-01"
                             variant="outlined"
                             label="Creation date"
+                            name="date"
                             type="date"
                         />
+                        <div>
+                            <StyledAccept onClick={handleCreate}>Create movie</StyledAccept>
+                        </div>
                     </div>
                 </div>
             </Modal>
         </>
     );
 }
+
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    token: state.auth.token,
+});
+
+export default connect(mapStateToProps, null)(ModalAddMovieSeries);

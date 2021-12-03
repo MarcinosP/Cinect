@@ -12,7 +12,7 @@ class MovieSeries(models.Model):
     is_imdb = models.BooleanField(default=False)
     is_movie = models.BooleanField(default=False)
     is_series = models.BooleanField(default=False)
-    foreign_id = models.CharField(max_length=100)
+    foreign_id = models.CharField(max_length=100, null=True)
 
 
 class UserMovieSeries(models.Model):

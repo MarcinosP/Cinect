@@ -1,13 +1,13 @@
-import Rating from '@material-ui/lab/Rating';
-import "./Movie.css";
-import React, {useState} from 'react';
 import {withStyles} from "@material-ui/core/styles";
-import Button from '@material-ui/core/Button';
-import {TiTick} from 'react-icons/ti';
-import {ImCross} from 'react-icons/im';
 import Snackbar from '@material-ui/core/Snackbar';
+import Button from '@material-ui/core/Button';
 import MuiAlert from '@material-ui/lab/Alert';
+import Rating from '@material-ui/lab/Rating';
+import {ImCross} from 'react-icons/im';
 import Cookies from "universal-cookie";
+import {TiTick} from 'react-icons/ti';
+import React, {useState} from 'react';
+import "./Movie.css";
 
 const Movie = (props) => {
         //snackbar

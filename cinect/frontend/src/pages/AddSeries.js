@@ -4,6 +4,7 @@ import Serie from "../components/layout/Serie";
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/layout/Sidebar";
 import axios from "axios";
+import ModalAddMovieSeries from "../components/layout/ModalAddMovieSeries";
 
 const AddSeries = () => {
     const [series, setSeries] = useState([]);
@@ -19,7 +20,6 @@ const AddSeries = () => {
         //         "x-rapidapi-key": "660967386fmsh651b062d09a33c4p19cd73jsn494fc351a8b8",
         //     },
         // };
-
         // axios
         //     .request(options)
         //     .then(function (response) {
@@ -48,10 +48,7 @@ const AddSeries = () => {
                 <Sidebar />
                 <div className="series-container">
                     <div className="series-search">
-                        <div className="series-search-filter">Series</div>
-                        <div className="series-search-bar">
-                            <input onChange={handleSearch} placeholder="search series" />
-                        </div>
+                        <ModalAddMovieSeries />
                     </div>
                     <div className="series-list">
                         {series.map((serie, key) => {

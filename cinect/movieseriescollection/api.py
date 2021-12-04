@@ -103,7 +103,6 @@ class MovieSeriesCinectGenericApi(
     serializer_class = MovieSeriesSerialzier
 
     def get(self, request, pk=None):
-        print(request.data)
         self.queryset = self.queryset.filter(is_imdb=False, is_movie=True)
         return self.list(request)
 
@@ -150,9 +149,9 @@ def movie_series_watched(request, pk=None):
 
 @api_view(['GET'])
 def get_cinect_series(request, pk=None):
-    cinect_series = UserMovieSeries.objects.filter(
+    cinect_series = MovieSeries.objects.filter(
         is_imdb=False, is_series=True)
     cinect_series_serialized = MovieSeriesSerialzier(
-        cinect_series, many=False).data
+        cinect_series, many=True).data
 
     return Response(cinect_series_serialized)

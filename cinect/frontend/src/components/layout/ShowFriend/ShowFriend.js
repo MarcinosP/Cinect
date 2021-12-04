@@ -26,53 +26,6 @@ const ShowFriend = (props) => {
     const [watchedList, setWatchedList] = useState({ watched: [] });
 
     useEffect(() => {
-        // console.log(id);
-        // Api.showUserInfo(id).then(response => {
-        //     console.log(id);
-        //     return response.data;
-
-        // }).then(data => {
-        //     console.log(data);
-        //     setFriend(prevState => ({
-        //         name: data['name'],
-        //         id: data['id'],
-        //         surname: data['surname'],
-        //         nationality: data['nationality'],
-        //         languages: data['languages'],
-        //         dateOfBirth: data['dateOfBirth'].date.split(' ')[0],
-        //         timeMovies: data['wtm'],
-        //         timeSeries: data['wts']
-        //     }))
-        // })
-        //     .catch(error => {
-        //         console.error(error);
-        //     })
-
-        // // add watched movies
-        // Api.getWatchedMoviesByUser(id).then(response => {
-        //     console.log(response.data);
-        //     for (const responseElement of response.data) {
-        //         console.log(responseElement);
-        //         setWatchedList(prevState => (
-        //             {
-        //                 watched: [...prevState.watched, responseElement]
-        //             }
-        //         ))
-        //     }
-        // })
-
-        // // add watched series
-        // Api.getWatchedSeriesByUser(id).then(response => {
-        //     console.log(response.data);
-        //     for (const responseElement of response.data) {
-        //         console.log(responseElement);
-        //         setWatchedList(prevState => (
-        //             {
-        //                 watched: [...prevState.watched, responseElement]
-        //             }
-        //         ))
-        //     }
-        // })
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -82,11 +35,9 @@ const ShowFriend = (props) => {
 
         axios.get(`api/get-watched/${id}`, config).then((r) => {
             setWatched(r.data);
-            console.log(r.data);
         });
 
         axios.get(`api/auth/user-details/${id}`, config).then((response) => {
-            console.log(response.data);
             setFriend(response.data[0]);
         });
     }, []);
@@ -99,9 +50,6 @@ const ShowFriend = (props) => {
                 <div className="profile">
                     <div
                         className="info"
-                        onClick={() => {
-                            console.log(friend.name + " " + friend.surname);
-                        }}
                     >
                         <FriendInfo
                             name={friend.name + " " + friend.surname}
@@ -112,7 +60,7 @@ const ShowFriend = (props) => {
                         <FriendPreferences timeMovies={friend.watched_time_movies} timeSeries={friend.watched_time_series} />
                     </div>
 
-                    <div onClick={() => console.log(watchedList)} className="watched">
+                    <div className="watched">
                         <div className="text-lower1">viewing history</div>
                         <div className="watched-list">
                             {watched.map((w, key) => {

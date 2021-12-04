@@ -8,11 +8,20 @@ import { RiMovieLine } from "react-icons/ri";
 import { FiSettings } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 import { FaImdb } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.scss";
 
 export default function Sidebar() {
+    const [isOpen, setIsOpen] = useState({ imdb: false, cinect: false });
+
+    useEffect(() => {
+        window.location.href.includes("movies") ? setIsOpen({ ...isOpen, cinect: true }) : null;
+        window.location.href.includes("series") ? setIsOpen({ ...isOpen, cinect: true }) : null;
+        window.location.href.includes("serie-imdb") ? setIsOpen({ ...isOpen, imdb: true }) : null;
+        window.location.href.includes("movie-imdb") ? setIsOpen({ ...isOpen, imdb: true }) : null;
+    }, []);
+
     return (
         <div className="navbar">
             <ProSidebar>
@@ -30,7 +39,14 @@ export default function Sidebar() {
                             Friend list
                             <Link to="/friend_list" />
                         </MenuItem>
-                        <SubMenu title="IMDB database" icon={<FaImdb />}>
+                        <SubMenu
+                            open={isOpen.imdb}
+                            onOpenChange={() => {
+                                setIsOpen({ ...isOpen, imdb: !isOpen.imdb });
+                            }}
+                            title="IMDB database"
+                            icon={<FaImdb />}
+                        >
                             <MenuItem icon={<RiMovieLine />} active={window.location.href.includes("movie-imdb") ? true : false}>
                                 Movies
                                 <Link to="/movie-imdb" />
@@ -40,7 +56,14 @@ export default function Sidebar() {
                                 <Link to="/serie-imdb" />
                             </MenuItem>
                         </SubMenu>
-                        <SubMenu title="Cinect database" icon={<GiBookshelf />}>
+                        <SubMenu
+                            open={isOpen.cinect}
+                            onOpenChange={() => {
+                                setIsOpen({ ...isOpen, cinect: !isOpen.cinect });
+                            }}
+                            title="Cinect database"
+                            icon={<GiBookshelf />}
+                        >
                             <MenuItem icon={<RiMovieLine />} active={window.location.href.includes("movies") ? true : false}>
                                 Movies
                                 <Link to="/movies" />

@@ -34,7 +34,6 @@ const Profile = (props) => {
         
         axios.get('api/get-watched',config).then(r=>{
             setWatched(r.data)
-            console.log(r.data)
         })
     }, []);
 

@@ -41,7 +41,6 @@ export class Register extends Component {
                 languages,
                 dateOfBirth,
             };
-            console.log(newUser)
             this.props.register(newUser);
         }
     };

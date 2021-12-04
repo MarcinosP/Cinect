@@ -8,6 +8,9 @@ import Cookies from "universal-cookie";
 import {TiTick} from 'react-icons/ti';
 import React, {useState} from 'react';
 import "./Movie.css";
+import { connect } from "react-redux";
+import axios from "axios";
+
 
 const Movie = (props) => {
         //snackbar
@@ -50,14 +53,6 @@ const Movie = (props) => {
         }
 
         const addWatchedMovie = () => {
-            // const cookies = new Cookies();
-            // console.log(props.id + " " + ratingNew);
-            // Api.addWatchedMoviesByUser(cookies.get('user'), props.id, ratingNew).then(response => {
-            //     setOpen(true);
-            //     console.log(response);
-            // }).catch(error => {
-            //     console.log(error)
-            // })
             console.log("XD")
         }
 
@@ -125,4 +120,9 @@ const Movie = (props) => {
         );
     };
 
-export default Movie;
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    token: state.auth.token,
+});
+
+export default connect(mapStateToProps, null)(Movie);

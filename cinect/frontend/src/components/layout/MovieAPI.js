@@ -84,7 +84,6 @@ const MovieAPI = (props) => {
                     created_at: response1.data.results.created_at,
                     is_imdb: true
                 };
-                console.log(response1);
                 axios.post(`api/movie-series-imdb`, body, config).then((response2) => {
                     setOpen(true);
                 });

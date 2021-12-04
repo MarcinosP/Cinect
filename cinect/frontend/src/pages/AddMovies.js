@@ -11,15 +11,6 @@ import { connect } from "react-redux";
 
 const AddMovies = (props) => {
     const [movies, setMovies] = useState([]);
-    const [toPrint, setToPrint] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const handleClose = (event, reason) => {
-        if (reason === "clickaway") {
-            return;
-        }
-        setIsModalOpen(false);
-    };
 
     useEffect(() => {
         getData();
@@ -46,11 +37,8 @@ const AddMovies = (props) => {
                 <div className="movies-container">
                     <div className="movies-search">
                         <div className="movies-search-filter">
-                            <ModalAddMovieSeries />
+                            <ModalAddMovieSeries isMovie={true} />
                         </div>
-                        {/* <div className="movies-search-bar">
-                            <input onChange={handleSearch} placeholder="search movies" />
-                        </div> */}
                     </div>
                     <div className="movies-list">
                         {movies.map((movie, key) => {
@@ -63,7 +51,6 @@ const AddMovies = (props) => {
     );
 };
 
-// export default withRouter(AddMovies);
 const mapStateToProps = (state) => ({
     user: state.auth.user,
     token: state.auth.token,

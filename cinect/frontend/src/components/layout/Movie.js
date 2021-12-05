@@ -64,7 +64,7 @@ const Movie = (props) => {
                             setIsClicked(!isClicked)
                         }}>
                             <img className='movie-photo' 
-                            // src={require("../img/movies/" + props.title + ".jpg")}
+                            src={props.image}
                                  alt={"this is cool image"}/>
 
 

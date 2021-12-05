@@ -105,9 +105,9 @@ function ModalAddMovieSeries(props) {
         title: "",
         length: 0,
         date: "2020-01-01",
+        image: "",
     });
     const [open, setOpen] = useState(false);
-    const [imdbInfo, setImdbInfo] = useState({});
 
     const handleOpen = (e) => {
         e.stopPropagation();
@@ -121,7 +121,12 @@ function ModalAddMovieSeries(props) {
 
     const handleChangeNewObject = (e) => {
         e.preventDefault();
-        setNewObject({ ...newObject, [e.target.name]: e.target.value });
+        if (e.target.name == "image") {
+            setNewObject({ ...newObject, [e.target.name]: e.target.files[0] });
+            console.log(e.target.files);
+        } else {
+            setNewObject({ ...newObject, [e.target.name]: e.target.value });
+        }
     };
 
     const StyledMovieAccept = withStyles({
@@ -146,15 +151,22 @@ function ModalAddMovieSeries(props) {
                 Authorization: "Token " + props.token,
             },
         };
+        let formData = new FormData();
+
+        formData.append("image", newObject.image);
+        formData.append("title", newObject.title);
+        formData.append("length", newObject.length);
+        formData.append("date", newObject.date);
+
         if (props.isMovie == true) {
-            axios.post(`api/movie-series-cinect`, { ...newObject, is_movie: true }, config).then((response) => {
+            formData.append("is_movie", true);
+            axios.post(`api/movie-series-cinect`, formData, config).then((response) => {
                 console.log(response);
-                //todo
             });
         } else {
-            axios.post(`api/movie-series-cinect`, { ...newObject, is_series: true }, config).then((response) => {
+            formData.append("is_series", true);
+            axios.post(`api/movie-series-cinect`, formData, config).then((response) => {
                 console.log(response);
-                //todo
             });
         }
     };
@@ -171,6 +183,15 @@ function ModalAddMovieSeries(props) {
                         {props.isMovie ? (
                             <>
                                 <div> Add movie</div>
+                                <>
+                                    image:
+                                    <input
+                                        onChange={handleChangeNewObject}
+                                        type="file"
+                                        name="image"
+                                        accept="image/png, image/gif, image/jpeg"
+                                    />
+                                </>
                                 <CssMovieTextField
                                     onChange={handleChangeNewObject}
                                     value={newObject.title}
@@ -207,7 +228,16 @@ function ModalAddMovieSeries(props) {
                             </>
                         ) : (
                             <>
-                                <div> {props.isMovie ? "Add movie" : "Add series"}</div>
+                                <div> Add series</div>
+                                <>
+                                    image:
+                                    <input
+                                        onChange={handleChangeNewObject}
+                                        type="file"
+                                        name="image"
+                                        accept="image/png, image/gif, image/jpeg"
+                                    />
+                                </>
                                 <CssSeriesTextField
                                     onChange={handleChangeNewObject}
                                     value={newObject.title}

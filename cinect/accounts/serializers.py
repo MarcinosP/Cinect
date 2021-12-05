@@ -3,7 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from .models import FriendList, UserDetails
-
+from movieseriescollection.serializers import Base64ImageField
 # User Serializer
 
 
@@ -42,7 +42,8 @@ class LoginSerializer(serializers.Serializer):
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):
-    date_of_birth=serializers.DateField(format=None,input_formats=None)
+    date_of_birth = serializers.DateField(format=None, input_formats=None)
+
     class Meta:
         model = UserDetails
         fields = "__all__"
@@ -50,10 +51,21 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return UserDetails.objects.create(**validated_data)
 
+
 class FriendListSerializer(serializers.ModelSerializer):
     class Meta:
         model = FriendList
         fields = "__all__"
+
     def create(self, validated_data):
         return FriendList.objects.create(**validated_data)
 
+
+class UserDetailsSerializer(serializers.ModelSerializer):
+    avatar = Base64ImageField(
+        max_length=None, use_url=True,
+    )
+
+    class Meta:
+        model = UserDetails
+        fields = "__all__"

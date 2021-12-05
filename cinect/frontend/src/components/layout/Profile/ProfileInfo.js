@@ -1,27 +1,11 @@
-import React from "react";
-import { BiEditAlt } from "react-icons/bi";
-import Avatar from "@material-ui/core/Avatar";
 import { GrFacebookOption, GrGoogle, GrInstagram, GrSnapchat } from "react-icons/gr";
+import ModalChangeAvatar from "../../accounts/ModalChangeAvatar";
 import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+import { BiEditAlt } from "react-icons/bi";
+import React from "react";
 
 const ProfileInfo = (props) => {
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            display: "flex",
-            "& > *": {
-                margin: theme.spacing(1),
-            },
-        },
-        orange: {
-            color: theme.palette.getContrastText("#25A690"),
-            backgroundColor: "#25A690",
-            width: theme.spacing(10),
-            height: theme.spacing(10),
-            fontSize: "2em",
-        },
-    }));
-    const classes = useStyles();
-
     return (
         <div className="info-user-container">
             <div className={"edit-profile"}>
@@ -29,9 +13,12 @@ const ProfileInfo = (props) => {
                 <BiEditAlt onClick={() => {}} />
             </div>
             <div className="info-user">
-                <Avatar id={"info-photo"} className={classes.orange}>
+                {/* <Avatar id={"info-photo"} className={classes.orange}>
                     {props.name[0]}
-                </Avatar>
+                </Avatar> */}
+                <div className="info-photo">
+                    <ModalChangeAvatar capitalLeter={props.name[0]} />
+                </div>
                 <div className="text-lower">Name Surname</div>
                 <div className="text-info-higher">{props.name}</div>
                 <div className="text-lower">Date of birth</div>

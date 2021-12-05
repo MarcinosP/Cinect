@@ -14,6 +14,7 @@ class UserDetails(models.Model):
     watched_time_movies = models.IntegerField(default=0)
     watched_time_series = models.IntegerField(default=0)
     date_of_birth = models.DateTimeField(null=True)
+    avatar = models.ImageField(upload_to='avatars', null=True, blank=True)
 
 
 class FriendList(models.Model):

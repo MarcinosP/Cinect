@@ -47,9 +47,7 @@ const Serie = (props) => {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
     }
 
-    const addWatchedSeries = () => {
-
-    };
+    const addWatchedSeries = () => {};
 
     return (
         <>
@@ -60,11 +58,7 @@ const Serie = (props) => {
                             setIsClicked(!isClicked);
                         }}
                     >
-                        <img
-                            className="serie-photo"
-                            // src={require("../img/series/" + props.title + ".jpg")}
-                            alt={"this is cool image"}
-                        />
+                        <img className="serie-photo" src={props.image} alt={"this is cool image"} />
 
                         <div className="serie-component-content">
                             <div className={"text-lower"}>Title</div>

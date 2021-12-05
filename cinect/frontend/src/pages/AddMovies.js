@@ -42,7 +42,7 @@ const AddMovies = (props) => {
                     </div>
                     <div className="movies-list">
                         {movies.map((movie, key) => {
-                            return <Movie key={key} id={key} date={"no"} title={movie.title} rating={movie.rating} />;
+                            return <Movie key={key} id={key} image={movie.image} date={movie.date} title={movie.title} rating={movie.rating} />;
                         })}
                     </div>
                 </div>

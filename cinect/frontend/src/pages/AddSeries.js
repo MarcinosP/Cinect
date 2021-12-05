@@ -41,7 +41,7 @@ const AddSeries = (props) => {
                     </div>
                     <div className="series-list">
                         {series.map((serie, key) => {
-                            return <Serie key={key} id={key} date={"no"} title={serie.title} rating={serie.rating} />;
+                            return <Serie key={key} image={serie.image} date={serie.date} id={key} title={serie.title} rating={serie.rating} />;
                         })}
                     </div>
                 </div>

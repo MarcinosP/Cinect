@@ -99,12 +99,11 @@ const useStyles = makeStyles((theme) => ({
 
 function ModalAddMovieSeries(props) {
     const classes = useStyles();
-    // getModalStyle is not a pure function, we roll the style only on the first render
     const [modalStyle] = useState(getModalStyle);
     const [newObject, setNewObject] = useState({
         title: "",
         length: 0,
-        date: "2020-01-01",
+        created_at: "2020-01-01",
         image: "",
     });
     const [open, setOpen] = useState(false);
@@ -123,7 +122,6 @@ function ModalAddMovieSeries(props) {
         e.preventDefault();
         if (e.target.name == "image") {
             setNewObject({ ...newObject, [e.target.name]: e.target.files[0] });
-            console.log(e.target.files);
         } else {
             setNewObject({ ...newObject, [e.target.name]: e.target.value });
         }
@@ -156,17 +154,19 @@ function ModalAddMovieSeries(props) {
         formData.append("image", newObject.image);
         formData.append("title", newObject.title);
         formData.append("length", newObject.length);
-        formData.append("date", newObject.date);
+        formData.append("created_at", newObject.created_at);
 
         if (props.isMovie == true) {
             formData.append("is_movie", true);
             axios.post(`api/movie-series-cinect`, formData, config).then((response) => {
-                console.log(response);
+                props.getData();
+                setOpen(false);
             });
         } else {
             formData.append("is_series", true);
             axios.post(`api/movie-series-cinect`, formData, config).then((response) => {
-                console.log(response);
+                props.getData();
+                setOpen(false);
             });
         }
     };
@@ -215,11 +215,11 @@ function ModalAddMovieSeries(props) {
                                 />
                                 <CssMovieTextField
                                     onChange={handleChangeNewObject}
-                                    value={newObject.date}
+                                    value={newObject.created_at}
                                     id="outlined-basic"
                                     variant="outlined"
                                     label="Creation date"
-                                    name="date"
+                                    name="created_at"
                                     type="date"
                                 />
                                 <div>
@@ -261,11 +261,11 @@ function ModalAddMovieSeries(props) {
                                 />
                                 <CssSeriesTextField
                                     onChange={handleChangeNewObject}
-                                    value={newObject.date}
+                                    value={newObject.created_at}
                                     id="outlined-basic"
                                     variant="outlined"
                                     label="Creation date"
-                                    name="date"
+                                    name="created_at"
                                     type="date"
                                 />
                                 <div>

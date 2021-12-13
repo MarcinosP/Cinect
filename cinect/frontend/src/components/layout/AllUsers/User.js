@@ -64,8 +64,7 @@ const User = (props) => {
                 Authorization: "Token " + props.token,
             },
         };
-        axios.post("api/friend-list", { user_requested: props.id }, config).then((response) => {
-        });
+        axios.post("api/friend-list", { user_requested: props.id }, config).then((response) => {});
     };
 
     return (
@@ -77,7 +76,7 @@ const User = (props) => {
                     }}
                     className={"user-display"}
                 >
-                    <Avatar id={"avatar-user" + props.id} className={classes.orange}>
+                    <Avatar id={"avatar-user" + props.id} className={classes.orange} src={"http://localhost:8000/media/" + props.avatar}>
                         {props.name == null ? props.name : props.name[0]}
                     </Avatar>
                     <div className={"text-lower-user"}>{props.name}</div>
@@ -100,21 +99,6 @@ const User = (props) => {
                     </div>
                 </div>
             )}
-            {/* <div
-                onClick={() => {
-                    setDisplay(!display);
-                }}
-                className={"user-display"}
-            >
-            <Avatar id={"avatar-user" + props.id} className={classes.orange}>
-                {props.name == null ? props.name : props.name[0]}
-            </Avatar>
-                <div className={"text-lower-user"}>{props.name}</div>
-                <div className={"text-lower-user"}>{props.surname}</div>
-            </div> */}
-            {/* <Avatar id={"avatar-user" + props.id} className={classes.orange}>
-                {props.name == null ? props.name : props.name[0]}
-            </Avatar> */}
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     friend request was send to {props.name + " " + props.surname}

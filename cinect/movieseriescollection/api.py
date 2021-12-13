@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from .serializers import MovieSeriesSerialzier, UserMovieSeriesSerialzier
+from .serializers import MovieSeriesSerialzier, UserMovieSeriesSerialzier, MovieSeriesIMDBSerialzier
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework import status, mixins, generics, exceptions
@@ -22,7 +22,7 @@ class MovieSeriesIMDBGenericApi(
     ]
 
     queryset = MovieSeries.objects.all().order_by('-pk')
-    serializer_class = MovieSeriesSerialzier
+    serializer_class = MovieSeriesIMDBSerialzier
 
     def get(self, request, pk=None):
         if pk:
@@ -35,7 +35,7 @@ class MovieSeriesIMDBGenericApi(
             title=request.data["title"])
         if(len(is_title_present) == 0):
 
-            new_movie_series = MovieSeriesSerialzier(data=request.data)
+            new_movie_series = MovieSeriesIMDBSerialzier(data=request.data)
             new_movie_series.is_valid(raise_exception=True)
             new_movie_series_save = new_movie_series.save()
 

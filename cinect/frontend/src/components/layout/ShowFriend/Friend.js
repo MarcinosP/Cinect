@@ -29,7 +29,7 @@ const Friend = (props) => {
         return (
             <>
                 <div className={'user-display'} onClick={chooseHandler}>
-                    <Avatar id={'avatar-user'} className={classes.orange}>{props.name[0]}</Avatar>
+                    <Avatar src={"http://localhost:8000/media/" + props.avatar} id={'avatar-user'} className={classes.orange}>{props.name[0]}</Avatar>
                     <div className={'text-lower-user'}>
                         {props.name}
                     </div>

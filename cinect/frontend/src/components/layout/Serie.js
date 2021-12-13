@@ -1,7 +1,7 @@
 import Rating from "@material-ui/lab/Rating";
 import { withStyles } from "@material-ui/core/styles";
 import "./Serie.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
@@ -64,7 +64,7 @@ const Serie = (props) => {
                             <div className={"text-lower"}>Title</div>
                             <div className={"text-higher-series"}>{props.title}</div>
                             <div className={"text-lower"}>Creation date</div>
-                            <div className={"text-higher-series"}>{props.date}</div>
+                            <div className={"text-higher-series"}>{props.date != undefined ? props.date.split("T")[0] : props.date}</div>
                             <div className={"text-lower"}>Average rate</div>
                             <StyledRating value={props.rating} readOnly precision={1} />
                         </div>

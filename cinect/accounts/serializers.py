@@ -61,11 +61,11 @@ class FriendListSerializer(serializers.ModelSerializer):
         return FriendList.objects.create(**validated_data)
 
 
-class UserDetailsSerializer(serializers.ModelSerializer):
+class AvatarSerializer(serializers.ModelSerializer):
     avatar = Base64ImageField(
         max_length=None, use_url=True,
     )
 
     class Meta:
         model = UserDetails
-        fields = "__all__"
+        fields = ('avatar',)

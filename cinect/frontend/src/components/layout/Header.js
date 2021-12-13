@@ -1,16 +1,34 @@
+import { makeStyles } from "@material-ui/core/styles";
+import { deepPurple } from "@material-ui/core/colors";
+import Avatar from "@material-ui/core/Avatar";
+import { logout } from "../../actions/auth";
+import { useEffect, useState } from "react";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { logout } from "../../actions/auth";
-import "./Header.css";
 import logo from "../../img/logo.png";
-import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import { deepPurple } from "@material-ui/core/colors";
+import PropTypes from "prop-types";
+import axios from "axios";
+import "./Header.css";
 
 const Header = (props) => {
-    // const { isAuthenticated, user } = this.props.auth;
+    const [userAvatar, setUserAvatar] = useState("");
+    useEffect(() => {
+        getAvatar();
+    }, []);
+
+    const getAvatar = async () => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Token " + props.token,
+            },
+        };
+
+        await axios.get(`api/auth/user-details`, config).then((response) => {
+            setUserAvatar(response.data[0].avatar);
+        });
+    };
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -35,13 +53,14 @@ const Header = (props) => {
             <div className="logo-div">
                 <img className="logo" src={logo} alt={"this is avatar image"} />
             </div>
-            <Avatar onClick={props.logout} className={classes.purple}></Avatar>
+            <Avatar src={userAvatar} onClick={props.logout} className={classes.purple}></Avatar>
         </div>
     );
 };
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
+    token: state.auth.token,
 });
 
 export default connect(mapStateToProps, { logout })(Header);

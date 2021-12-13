@@ -18,6 +18,10 @@ const FriendList = (props) => {
     };
 
     useEffect(() => {
+        getData();
+    }, []);
+
+    const getData = async () => {
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -25,11 +29,14 @@ const FriendList = (props) => {
             },
         };
 
-        axios.get("api/friend-list", config).then((response) => {
+        await axios.get("api/friend-list", config).then((response) => {
             const fList = response.data.filter((e) => e.confirmed == true);
             setFriendList(fList);
+            console.log(fList);
+            console.log("fList");
+            console.log("fList");
         });
-    }, []);
+    };
 
     const handleSearch = (event) => {
         if (event.target.value === "") {

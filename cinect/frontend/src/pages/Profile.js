@@ -9,8 +9,9 @@ import { connect } from "react-redux";
 import axios from "axios";
 
 const Profile = (props) => {
-    const [watched, setWatched] = useState([])
+    const [watched, setWatched] = useState([]);
     const [userData, setUserData] = useState({
+        id: "",
         name: "",
         surname: "",
         nationality: "",
@@ -18,6 +19,7 @@ const Profile = (props) => {
         date_of_birth: "",
         watched_time_movies: "",
         watched_time_series: "",
+        avatar:"",
     });
 
     useEffect(() => {
@@ -31,10 +33,9 @@ const Profile = (props) => {
             setUserData(response.data[0]);
         });
 
-        
-        axios.get('api/get-watched',config).then(r=>{
-            setWatched(r.data)
-        })
+        axios.get("api/get-watched", config).then((r) => {
+            setWatched(r.data);
+        });
     }, []);
 
     return (
@@ -49,6 +50,8 @@ const Profile = (props) => {
                             dateOfBirth={userData.date_of_birth}
                             nationality={userData.nationality}
                             languages={userData.languages}
+                            id={userData.id}
+                            avatar={userData.avatar}
                         />
                         <ProfilePreferences timeMovies={userData.watched_time_movies} timeSeries={userData.watched_time_series} />
                     </div>

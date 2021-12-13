@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, UserDetailsSerializer, FriendListSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, UserDetailsSerializer, FriendListSerializer, AvatarSerializer
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework import status, mixins, generics, exceptions
@@ -68,7 +68,7 @@ class AllUsersGenericApi(generics.RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         user_queryset = User.objects.values(
-            'id', 'details__name', 'details__surname').annotate(name=F('details__name'), surname=F('details__surname'))
+            'id', 'details__name', 'details__surname', "details__avatar").annotate(name=F('details__name'), surname=F('details__surname'), avatar=F('details__avatar'))
         return Response({
             user_queryset
         })
@@ -86,6 +86,9 @@ class UserDetailsGenericApi(
         if user_pk:
             self.queryset = self.queryset.filter(
                 user_id=user_pk)
+        else:
+            self.queryset = self.queryset.filter(
+                user_id=request.user.id)
         return self.list(request)
 
 
@@ -110,7 +113,7 @@ class FriendListGenericApi(
 
     def get(self, request):
         response = self.queryset.filter(
-            user_requested=request.user.id).values('user_requesting_id', 'user_requesting__details__name', 'user_requesting__details__surname', 'confirmed').annotate(id=F('user_requesting_id'), name=F('user_requesting__details__name'), surname=F('user_requesting__details__surname'))
+            user_requested=request.user.id).values('user_requesting_id', 'user_requesting__details__name', 'user_requesting__details__surname', 'user_requesting__details__avatar', 'confirmed').annotate(id=F('user_requesting_id'), name=F('user_requesting__details__name'), surname=F('user_requesting__details__surname'),avatar=F('user_requesting__details__avatar'))
         return Response(
             response
         )
@@ -143,3 +146,17 @@ class GetFriendListGenericApi(
         return Response(
             response
         )
+
+
+class AvatarGenericApi(
+        generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    serializer_class = AvatarSerializer
+    queryset = UserDetails.objects.all()
+
+    def patch(self, request, pk=None):
+        return Response({
+            'data': self.update(request, pk, partial=True).data
+        })

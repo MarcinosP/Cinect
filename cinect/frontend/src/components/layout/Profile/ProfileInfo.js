@@ -10,14 +10,10 @@ const ProfileInfo = (props) => {
         <div className="info-user-container">
             <div className={"edit-profile"}>
                 <div className="text-lower1">profile info</div>
-                <BiEditAlt onClick={() => {}} />
             </div>
             <div className="info-user">
-                {/* <Avatar id={"info-photo"} className={classes.orange}>
-                    {props.name[0]}
-                </Avatar> */}
                 <div className="info-photo">
-                    <ModalChangeAvatar capitalLeter={props.name[0]} />
+                    <ModalChangeAvatar avatar={props.avatar} id={props.id} capitalLeter={props.name[0]} />
                 </div>
                 <div className="text-lower">Name Surname</div>
                 <div className="text-info-higher">{props.name}</div>

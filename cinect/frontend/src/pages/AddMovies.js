@@ -37,12 +37,12 @@ const AddMovies = (props) => {
                 <div className="movies-container">
                     <div className="movies-search">
                         <div className="movies-search-filter">
-                            <ModalAddMovieSeries isMovie={true} />
+                            <ModalAddMovieSeries getData={getData} isMovie={true} />
                         </div>
                     </div>
                     <div className="movies-list">
                         {movies.map((movie, key) => {
-                            return <Movie key={key} id={key} image={movie.image} date={movie.date} title={movie.title} rating={movie.rating} />;
+                            return <Movie key={key} id={key} image={movie.image} date={movie.created_at} title={movie.title} rating={movie.rating} />;
                         })}
                     </div>
                 </div>

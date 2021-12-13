@@ -52,11 +52,17 @@ class Base64ImageField(serializers.ImageField):
         return extension
 
 
+class MovieSeriesIMDBSerialzier(serializers.ModelSerializer):
+
+    class Meta:
+        model = MovieSeries
+        fields = "__all__"
+
 class MovieSeriesSerialzier(serializers.ModelSerializer):
     image = Base64ImageField(
         max_length=None, use_url=True,
     )
-
+    created_at = serializers.DateField(format=None, input_formats=None)
     class Meta:
         model = MovieSeries
         fields = "__all__"

@@ -86,7 +86,7 @@ function ModalChangeAvatar(props) {
         let formData = new FormData();
         formData.append("avatar", newObject.image);
 
-        axios.post(`api/movie-series-cinect`, formData, config).then((response) => {
+        axios.patch(`api/avatar/${props.id}`, formData, config).then((response) => {
             console.log(response);
             // todo
         });
@@ -94,8 +94,8 @@ function ModalChangeAvatar(props) {
 
     return (
         <>
-            <Avatar onClick={handleOpen} src={props.image} className={classes.orange}>
-                {" "}
+            <Avatar onClick={handleOpen} src={props.avatar} className={classes.orange}>
+                 
                 {props.capitalLeter}
             </Avatar>
             <Modal open={open} onClose={handleClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">

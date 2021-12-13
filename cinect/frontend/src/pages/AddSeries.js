@@ -36,12 +36,12 @@ const AddSeries = (props) => {
                 <div className="series-container">
                     <div className="series-search">
                         <div className="series-search-filter">
-                            <ModalAddMovieSeries />
+                            <ModalAddMovieSeries getData={getData} />
                         </div>
                     </div>
                     <div className="series-list">
                         {series.map((serie, key) => {
-                            return <Serie key={key} image={serie.image} date={serie.date} id={key} title={serie.title} rating={serie.rating} />;
+                            return <Serie key={key} image={serie.image} date={serie.created_at} id={key} title={serie.title} rating={serie.rating} />;
                         })}
                     </div>
                 </div>

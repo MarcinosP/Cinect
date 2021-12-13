@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .api import RegisterAPI, LoginAPI, UserAPI, UserDetailsGenericApi, AllUsersGenericApi, FriendListGenericApi
+from .api import RegisterAPI, LoginAPI, UserAPI, UserDetailsGenericApi, AllUsersGenericApi, FriendListGenericApi, AvatarGenericApi
 from knox import views as knox_views
 
 urlpatterns = [
@@ -12,5 +12,7 @@ urlpatterns = [
          UserDetailsGenericApi.as_view()),
     path('api/auth/all-users', AllUsersGenericApi.as_view()),
     path('api/auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
-    path('api/friend-list', FriendListGenericApi.as_view())
+    path('api/friend-list', FriendListGenericApi.as_view()),
+    path('api/avatar', AvatarGenericApi.as_view()),
+    path('api/avatar/<str:pk>', AvatarGenericApi.as_view())
 ]

@@ -67,7 +67,7 @@ const AllUsers = (props) => {
                     {display ? (
                         <div className={"users-list"}>
                             {users.map((user, key) => {
-                                return <User id={user.id} name={user.name} surname={user.surname} />;
+                                return <User id={user.id} name={user.name} surname={user.surname} avatar={user.avatar} />;
                             })}
                         </div>
                     ) : (

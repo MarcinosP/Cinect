@@ -48,14 +48,13 @@ const ShowFriend = (props) => {
             <div className="content">
                 <Sidebar />
                 <div className="profile">
-                    <div
-                        className="info"
-                    >
+                    <div className="info">
                         <FriendInfo
                             name={friend.name + " " + friend.surname}
                             dateOfBirth={friend.date_of_birth}
                             nationality={friend.nationality}
                             languages={friend.languages}
+                            avatar={friend.avatar}
                         />
                         <FriendPreferences timeMovies={friend.watched_time_movies} timeSeries={friend.watched_time_series} />
                     </div>

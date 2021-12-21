@@ -32,7 +32,7 @@ const FriendInfo = (props) => {
                 <BiEditAlt onClick={()=>{}}/>
             </div>
             <div className='info-user'>
-                <Avatar id={"info-photo"} className={classes.orange}>{props.name[0]}</Avatar>
+                <Avatar src={props.avatar} id={"info-photo"} className={classes.orange}>{props.name[0]}</Avatar>
                 <div className='text-lower'>
                     Name Surname
                 </div>

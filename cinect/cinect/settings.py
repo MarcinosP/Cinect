@@ -85,13 +85,32 @@ WSGI_APPLICATION = 'cinect.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
+DATABASES = {
+
+    'default': {
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': 'df10eqestgmjbc',
+
+        'USER': 'cfwedyfjjsqguy',
+
+        'PASSWORD': '185eb7b80e4ef7517a00051f96feb399b40e8a3a34f69075a224df2e90bef82e',
+
+        'HOST': 'ec2-54-155-87-214.eu-west-1.compute.amazonaws.com',
+
+        'PORT': '5432',
+
+    }
+
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

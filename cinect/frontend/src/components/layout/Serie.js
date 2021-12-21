@@ -99,7 +99,7 @@ const Serie = (props) => {
             </div>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
-                    movie was added Successfully!
+                    series was added Successfully!
                 </Alert>
             </Snackbar>
         </>

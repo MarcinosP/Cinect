@@ -114,6 +114,8 @@ class FriendListGenericApi(
     def get(self, request):
         response = self.queryset.filter(
             user_requested=request.user.id).values('user_requesting_id', 'user_requesting__details__name', 'user_requesting__details__surname', 'user_requesting__details__avatar', 'confirmed').annotate(id=F('user_requesting_id'), name=F('user_requesting__details__name'), surname=F('user_requesting__details__surname'),avatar=F('user_requesting__details__avatar'))
+        response = list(chain(response , self.queryset.filter(
+            user_requesting=request.user.id).values('user_requested_id', 'user_requested__details__name', 'user_requested__details__surname', 'user_requested__details__avatar', 'confirmed').annotate(id=F('user_requested_id'), name=F('user_requested__details__name'), surname=F('user_requested__details__surname'),avatar=F('user_requested__details__avatar'))))
         return Response(
             response
         )

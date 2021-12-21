@@ -30,11 +30,8 @@ const FriendList = (props) => {
         };
 
         await axios.get("api/friend-list", config).then((response) => {
-            const fList = response.data.filter((e) => e.confirmed == true);
-            setFriendList(fList);
-            console.log(fList);
-            console.log("fList");
-            console.log("fList");
+            const friendList = response.data.filter((e) => e.confirmed == true);
+            setFriendList(friendList);
         });
     };
 
@@ -64,7 +61,7 @@ const FriendList = (props) => {
 
                     <div className={"users-list"}>
                         {friendList.map((user, key) => {
-                            return <Friend name={user.name} surname={user.surname} id={user.id} handler={showUserHandler} />;
+                            return <Friend avatar ={user.avatar} name={user.name} surname={user.surname} id={user.id} handler={showUserHandler} />;
                         })}
                     </div>
                 </div>

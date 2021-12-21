@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import Rating from "@material-ui/lab/Rating";
 import Modal from "@material-ui/core/Modal";
 import { GoInfo } from "react-icons/go";
+import YouTube from "react-youtube";
 import axios from "axios";
 import "./Movie.css";
 import "./Serie.css";
-
 function getModalStyle() {
     const top = 50;
     const left = 50;
@@ -53,6 +53,15 @@ export default function SimpleModal(props) {
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
     const [imdbInfo, setImdbInfo] = useState({});
+    const [videoId, setVideoId] = useState("");
+
+    const opts = {
+        height: "280",
+        width: "500",
+        playerVars: {
+            autoplay: 1,
+        },
+    };
 
     useEffect(() => {
         if (open == true) {
@@ -78,6 +87,10 @@ export default function SimpleModal(props) {
             .request(options)
             .then(function (response) {
                 setImdbInfo(response.data.results);
+                // setVideoId(response.data.result.trailer.split("v=")[1].split("&")[0]);
+                if (response.data.results?.trailer != undefined) {
+                    setVideoId(response.data.results.trailer.split("/").at(-1));
+                }
             })
             .catch(function (error) {
                 console.error(error);
@@ -112,6 +125,10 @@ export default function SimpleModal(props) {
                             ) : (
                                 <StyledRatingSeries name="hover-feedback" value={imdbInfo.rating / 2} readOnly precision={1} />
                             )}
+                        </div>
+                        <div style={{ margin: "10px 0 0 40px" }}>
+                            {/* imdbInfo.trailer */}
+                            <YouTube videoId={videoId} opts={opts} />;
                         </div>
                         <div style={{ marginLeft: "10px" }}>{imdbInfo.plot}</div>
                     </div>

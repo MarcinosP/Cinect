@@ -1,0 +1,162 @@
+header {
+    color: white;
+    height: 5vh;
+}
+
+.content {
+    height: 94vh;
+    color: white;
+    display: flex;
+}
+
+.profile {
+    margin: 0vh auto 1vh 1vw;
+    min-height: 100%;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.info {
+    width: 100%;
+    height: 52vh;
+    display: flex;
+}
+
+.info-user {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-user-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #28293d;
+    border-radius: 1em;
+    margin: 0vh 0.5vw 1vh 0;
+}
+
+#info-photo {
+    margin: 0 auto 1em auto;
+}
+
+.social-media {
+    font-size: 1.6em;
+    color: #25a690;
+    margin: auto 10vw 0.3em 10vw;
+    letter-spacing: 2px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.text-lower {
+    font-size: 0.7em;
+    color: #707070;
+}
+
+.text-lower1 {
+    margin-left: 1vw;
+    font-size: 0.7em;
+    color: #707070;
+}
+
+.text-info-higher {
+    font-size: 1.4em;
+    color: #25a690;
+    margin-bottom: 0.3em;
+}
+
+.text-preferences-higher {
+    font-size: 1.4em;
+    color: #c263ac;
+    margin-bottom: 0.5em;
+}
+
+.margin-preferences {
+    margin: 2em 0 0 2em;
+}
+
+.info-preferences {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #28293d;
+    border-radius: 1em;
+    margin: 0 0 1vh 0.5vw;
+}
+
+.fav {
+    background-color: white;
+    height: 10vh;
+    width: 10vw;
+    margin: 1vh auto 1vh 0vw;
+    border-radius: 0.5em;
+}
+
+.watched {
+    margin-top: 2vh;
+    border-radius: 1em;
+    background-color: #28293d;
+    margin-bottom: 1vh;
+}
+
+.watched-list {
+    min-height: 40vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    object-fit: cover;
+}
+
+.edit-profile {
+    display: flex;
+    flex-direction: row;
+}
+
+.edit-profile > svg {
+    margin-left: 1vw;
+    color: #25a690;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.edit-profile > svg :hover {
+    color: #9de9dc;
+}
+
+@media only screen and (max-device-width: 700px) {
+    * {
+        font-size: 1.1em;
+    }
+
+    .profile {
+        margin: auto;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    .info {
+        flex-direction: column;
+        overflow: scroll;
+        overflow-x: hidden;
+        min-height: 50%;
+    }
+
+    .info-user-container {
+        width: 100%;
+    }
+
+    .info-preferences {
+        width: 100%;
+    }
+
+    .watched-list {
+        grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    }
+}

@@ -1,0 +1,41 @@
+.user-display {
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s ease-out;
+    /* width: 10vw; */
+}
+.user-display:hover{
+    background-color: #2e2f46;
+    border-radius: 1em;
+    transition: 0s ease-out;
+}
+
+.user-display > div {
+    margin: auto;
+}
+
+.text-lower-user {
+    font-size: 0.7em;
+    color: #cfcfcf;
+    text-align: center;
+}
+
+.avatar-user {
+    margin: auto;
+}
+
+.avatar-user:hover {
+    margin: auto;
+}
+
+.user-query{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+.user-buttons{
+    display: flex;
+    flex-direction: row;
+}

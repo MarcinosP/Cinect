@@ -1,0 +1,26 @@
+.navbar {
+  width: 12vw;
+  margin: 0 0 1vh 1vw;
+  border-radius: 1em;
+  background: rgb(54, 55, 76);
+}
+
+// Your variable overrides
+$sidebar-bg-color: rgb(54, 55, 76);
+$sidebar-width: 12vw !default;
+// $highlight-color: #f8c39c !default;
+$highlight-color: #8cfac4 !default;
+
+.closemenu {
+    color: #DDDDDD;
+    // position: absolute;
+    z-index: 9999;
+    // line-height: 20px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 22px;
+    cursor: pointer;
+    margin: 5px auto auto 25px;
+  }
+
+@import "~react-pro-sidebar/dist/scss/styles.scss";

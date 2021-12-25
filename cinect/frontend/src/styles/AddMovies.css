@@ -1,0 +1,115 @@
+.content {
+    height: 94vh;
+    color: white;
+    display: flex;
+}
+
+.movies-container {
+    margin: 0vh auto 1vh 1vw;
+    min-height: 100%;
+    width: 85%;
+    background-color: #28293d;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.movies-search {
+    display: flex;
+    height: 5vh;
+    width: 100%;
+}
+
+.movies-search-filter {
+    margin-left: 2vw;
+    width: 20%;
+}
+
+.movies-search-bar {
+    width: 80%;
+    margin-top: 0.3vh;
+}
+
+.movies-search-bar > input {
+    background: #47485d 0% 0% no-repeat padding-box;
+    border: none;
+    border-radius: 1.5em;
+    height: 3vh;
+    width: 80%;
+    text-align: center;
+    color: white;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.movies-search-bar > input:focus {
+    outline: none;
+}
+
+.movies-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 1vw;
+    object-fit: cover;
+    width: 98%;
+    margin: 1vh 1vw 1vh 1vw;
+}
+
+.movies-filter-left {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1 / 2;
+}
+.movies-filter-right {
+    display: flex;
+    flex-direction: column;
+    grid-column: 3 / 6;
+}
+
+.dotted-button {
+    height: 1em;
+    width: 1em;
+    background-color: inherit;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid white;
+    margin-left: 0.5vw;
+}
+
+.dotted-button-pressed {
+    height: 1em;
+    width: 1em;
+    background-color: inherit;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid white;
+    background-color: #f1802d;
+    margin-left: 0.5vw;
+}
+
+.input-filter {
+    background: transparent;
+    width: 20%;
+    color: #fff;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #f1802d;
+    margin-left: 0.5vw;
+}
+
+@media only screen and (max-device-width: 700px) {
+    * {
+        font-size: 1.1em;
+    }
+    .movies-container {
+        width: 95vw;
+    }
+
+    .movies-list {
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    }
+}
